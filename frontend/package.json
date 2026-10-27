@@ -1,0 +1,24 @@
+{
+  "name": "lona-v6-admin",
+  "private": true,
+  "version": "6.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --host 0.0.0.0",
+    "test": "node --test tests/*.mjs",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src",
+    "build:offline": "vite build --config vite.offline.config.js"
+  },
+  "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
+    "pdf-lib": "^1.17.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "vite": "7.1.12"
+  }
+}

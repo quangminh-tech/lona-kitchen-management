@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: lona-kitchen-demo
+    runtime: docker
+    plan: starter
+    region: singapore
+    numInstances: 1
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: PORT
+        value: "10000"
+      - key: LONA_ADMIN_PASSWORD
+        sync: false
+      - key: DataPath
+        value: /var/data/state.json
+      - key: IdentityPath
+        value: /var/data/identity.json
+      - key: OperationsPath
+        value: /var/data/operations.json
+      - key: DataProtectionPath
+        value: /var/data/keys
+    disk:
+      name: lona-data
+      mountPath: /var/data
+      sizeGB: 1

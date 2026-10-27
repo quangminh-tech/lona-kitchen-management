@@ -1,0 +1,166 @@
+[
+  {
+    "id": "TRANSFER",
+    "name": "Phiếu điều chuyển nội bộ",
+    "version": 1,
+    "title": "PHIẾU ĐIỀU CHUYỂN NỘI BỘ",
+    "subtitle": "Số {{document.number}} · Ngày {{document.date}}",
+    "header": "{{company.name}}\n{{company.address}}\nMST: {{company.taxCode}}",
+    "info": "Kho xuất: {{warehouse.from}}\nKho nhận: {{warehouse.to}}\nLý do: {{document.reason}}\nTham chiếu: {{document.reference}}",
+    "footer": "Ghi chú: {{document.reason}}\nMẫu v{{system.templateVersion}}",
+    "columns": [
+      {
+        "key": "index",
+        "label": "STT",
+        "width": 6
+      },
+      {
+        "key": "code",
+        "label": "Mã hàng",
+        "width": 12
+      },
+      {
+        "key": "name",
+        "label": "Tên hàng",
+        "width": 26
+      },
+      {
+        "key": "unit",
+        "label": "ĐVT",
+        "width": 8
+      },
+      {
+        "key": "requested",
+        "label": "Yêu cầu",
+        "width": 12
+      },
+      {
+        "key": "dispatched",
+        "label": "Thực xuất",
+        "width": 12
+      },
+      {
+        "key": "received",
+        "label": "Thực nhận",
+        "width": 12
+      },
+      {
+        "key": "inTransit",
+        "label": "Đang đi",
+        "width": 12
+      }
+    ],
+    "signatures": [
+      "Người lập",
+      "Thủ kho xuất",
+      "Người vận chuyển",
+      "Thủ kho nhận"
+    ],
+    "fontSize": 10,
+    "orientation": "portrait"
+  },
+  {
+    "id": "ISSUE",
+    "name": "Phiếu xuất cho sản xuất",
+    "version": 1,
+    "title": "PHIẾU XUẤT KHO",
+    "subtitle": "Số {{document.number}} · Ngày {{document.date}}",
+    "header": "{{company.name}}\n{{company.address}}",
+    "info": "Bộ phận: {{kitchen.name}}\nKho xuất: {{warehouse.from}}\nLý do: {{document.reason}}\nTheo: {{document.reference}}",
+    "footer": "{{document.status}} · Mẫu v{{system.templateVersion}}",
+    "columns": [
+      {
+        "key": "index",
+        "label": "STT",
+        "width": 6
+      },
+      {
+        "key": "code",
+        "label": "Mã",
+        "width": 12
+      },
+      {
+        "key": "name",
+        "label": "Tên nguyên liệu",
+        "width": 30
+      },
+      {
+        "key": "unit",
+        "label": "ĐVT",
+        "width": 8
+      },
+      {
+        "key": "requested",
+        "label": "Yêu cầu",
+        "width": 14
+      },
+      {
+        "key": "approved",
+        "label": "Duyệt",
+        "width": 14
+      },
+      {
+        "key": "dispatched",
+        "label": "Thực xuất",
+        "width": 16
+      }
+    ],
+    "signatures": [
+      "Người lập phiếu",
+      "Người nhận",
+      "Thủ kho",
+      "Người duyệt"
+    ],
+    "fontSize": 10,
+    "orientation": "portrait"
+  },
+  {
+    "id": "REQUEST",
+    "name": "Phiếu đề nghị xuất",
+    "version": 1,
+    "title": "PHIẾU ĐỀ NGHỊ XUẤT KHO",
+    "subtitle": "Số {{document.number}} · Ngày {{document.date}}",
+    "header": "{{company.name}}",
+    "info": "Bộ phận: {{kitchen.name}}\nKho: {{warehouse.from}}\nLý do: {{document.reason}}",
+    "footer": "Phiếu đề nghị chưa làm giảm tồn kho.\nMẫu v{{system.templateVersion}}",
+    "columns": [
+      {
+        "key": "index",
+        "label": "STT",
+        "width": 6
+      },
+      {
+        "key": "name",
+        "label": "Tên gia vị / nguyên liệu",
+        "width": 38
+      },
+      {
+        "key": "unit",
+        "label": "ĐVT",
+        "width": 10
+      },
+      {
+        "key": "stock",
+        "label": "Tồn",
+        "width": 14
+      },
+      {
+        "key": "requested",
+        "label": "Đề xuất",
+        "width": 16
+      },
+      {
+        "key": "approved",
+        "label": "Phê duyệt",
+        "width": 16
+      }
+    ],
+    "signatures": [
+      "Người đề nghị",
+      "Người duyệt",
+      "Thủ kho"
+    ],
+    "fontSize": 10,
+    "orientation": "portrait"
+  }
+]

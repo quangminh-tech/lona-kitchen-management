@@ -1,0 +1,439 @@
+.menu-view-switch {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 20px 0 16px;
+}
+.menu-view-switch button {
+  background: transparent;
+  border: 0;
+  color: #6e7e75;
+  padding: 10px 16px;
+}
+.menu-view-switch button.active {
+  background: #e6f0eb;
+  color: #176b55;
+}
+.menu-view-switch > span {
+  margin-left: auto;
+  font-size: 12px;
+  color: #7b867f;
+}
+.week-board {
+  --board-bg: #fff;
+  --board-ink: #243c31;
+  --board-muted: #718279;
+  --board-border: #dce5df;
+  --board-header: #eef5f0;
+  --board-highlight: #176b55;
+  background: var(--board-bg);
+  color: var(--board-ink);
+  border: 1px solid var(--board-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.week-board-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 20px;
+  border-bottom: 1px solid var(--board-border);
+}
+.week-navigation {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.week-navigation b {
+  font-size: 19px;
+  letter-spacing: 0.2px;
+  display: block;
+}
+.week-navigation span {
+  display: block;
+  font-size: 12px;
+  color: var(--board-muted);
+  margin-top: 6px;
+}
+.week-navigation > button {
+  padding: 7px;
+  min-height: 34px;
+}
+.week-options {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.week-options input {
+  width: 145px;
+  font-size: 12px;
+}
+.week-options select {
+  font-size: 12px;
+}
+.week-options button {
+  font-size: 12px;
+  padding: 8px 10px;
+}
+.week-summary {
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--board-muted);
+  flex-wrap: wrap;
+}
+.week-summary label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: inherit;
+}
+.week-summary label input {
+  min-height: 0;
+  width: 15px;
+  height: 15px;
+}
+.week-summary > div {
+  display: flex;
+  gap: 6px;
+}
+.week-summary button {
+  font-size: 11px;
+  padding: 4px 9px;
+  min-height: 28px;
+}
+.week-board-scroll {
+  overflow: auto;
+}
+.weekly-menu-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  white-space: normal;
+  font-size: 16px;
+}
+.weekly-menu-table th,
+.weekly-menu-table td {
+  border: 0;
+  border-right: 1px solid var(--board-border);
+  border-bottom: 1px solid var(--board-border);
+  padding: 16px;
+  vertical-align: top;
+  background: var(--board-bg);
+  color: var(--board-ink);
+  min-width: 185px;
+  width: 185px;
+  height: auto;
+}
+.weekly-menu-table thead th {
+  background: var(--board-header);
+  text-align: center;
+  height: 97px;
+  vertical-align: middle;
+  position: relative;
+}
+.weekly-menu-table thead th span {
+  font-size: 15px;
+  font-weight: 700;
+  display: block;
+  color: var(--board-highlight);
+}
+.weekly-menu-table thead th b {
+  font-size: 21px;
+  display: block;
+  margin-top: 5px;
+}
+.weekly-menu-table thead th small {
+  font-size: 10px;
+  color: var(--board-highlight);
+  margin: 3px 0 0;
+}
+.weekly-menu-table .meal-label {
+  width: 76px;
+  min-width: 76px;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--board-header);
+  text-align: center;
+  padding: 20px 9px;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+.weekly-menu-table thead .meal-label {
+  font-size: 11px;
+  letter-spacing: 0;
+  color: var(--board-muted);
+}
+.weekly-menu-table td {
+  height: 250px;
+}
+.weekly-menu-table tbody tr:hover {
+  background: transparent;
+}
+.weekly-menu-table th:last-child,
+.weekly-menu-table td:last-child {
+  border-right: 0;
+}
+.meal-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--board-muted);
+  margin-bottom: 17px;
+}
+.meal-status > span:first-child {
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+.meal-status .draft {
+  background: #fff4db;
+  color: #94682b;
+}
+.meal-status .approved {
+  background: #e8f5ec;
+  color: #2e7751;
+}
+.board-dishes {
+  min-height: 80px;
+}
+.board-dish {
+  font-size: 17px;
+  line-height: 1.55;
+  font-weight: 600;
+  margin: 0 0 9px;
+  overflow-wrap: anywhere;
+}
+.dish-group {
+  margin: 0;
+}
+.dish-group h4 {
+  font-size: 11px;
+  letter-spacing: 0.2px;
+  color: var(--board-muted);
+  margin: 16px 0 8px;
+  font-weight: 500;
+}
+.dish-group.vegetarian,
+.dish-group.replacement {
+  border-top: 1px dashed var(--board-border);
+  padding-top: 1px;
+  margin-top: 16px;
+}
+.dish-group.vegetarian .board-dish,
+.dish-group.replacement .board-dish {
+  font-size: 14px;
+  color: var(--board-highlight);
+  font-weight: 500;
+}
+.board-meal-footer {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid var(--board-border);
+}
+.board-meal-footer small {
+  font-size: 10px;
+  color: var(--board-muted);
+  line-height: 1.8;
+}
+.board-meal-footer button {
+  margin-top: 9px;
+  padding: 5px 8px;
+  min-height: 29px;
+  font-size: 11px;
+  background: transparent;
+  border-color: var(--board-border);
+  color: var(--board-highlight);
+}
+.week-board-footnote {
+  padding: 13px 20px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--board-muted);
+}
+.missing-meal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--board-muted);
+  padding: 22px 0;
+  min-height: 170px;
+}
+.missing-meal b {
+  font-size: 13px;
+  font-weight: 500;
+}
+.missing-meal small {
+  font-size: 11px;
+  text-align: center;
+  color: var(--board-muted);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.dark-board {
+  --board-bg: #101512;
+  --board-ink: #f2f6f3;
+  --board-muted: #a5b8ac;
+  --board-border: #3b4940;
+  --board-header: #183325;
+  --board-highlight: #5de39a;
+}
+.dark-board .board-dish {
+  color: #f2f6f3;
+}
+.dark-board .regular .board-dish:nth-child(even) {
+  color: #5de39a;
+}
+.dark-board .week-options button,
+.dark-board .week-navigation button,
+.dark-board .week-summary button {
+  background: #1b2a21;
+  color: #dce8e0;
+  border-color: #46594c;
+}
+.dark-board .week-options input,
+.dark-board .week-options select {
+  background: #1b2a21;
+  color: #dce8e0;
+  border-color: #46594c;
+}
+.is-presenting {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  border: 0;
+  border-radius: 0;
+  overflow: auto;
+  padding: 0 22px 20px;
+}
+.is-presenting .week-board-toolbar {
+  position: sticky;
+  top: 0;
+  background: var(--board-bg);
+  z-index: 5;
+  padding: 18px 0;
+}
+.is-presenting .week-navigation b {
+  font-size: 26px;
+}
+.is-presenting .weekly-menu-table td {
+  height: 300px;
+}
+.is-presenting .board-dish {
+  font-size: 22px;
+  line-height: 1.5;
+}
+.is-presenting .board-meal-footer button {
+  display: none;
+}
+.is-presenting .weekly-menu-table {
+  min-width: 1300px;
+}
+.is-presenting .week-board-footnote {
+  padding-left: 0;
+}
+.week-board:has(th:nth-child(8)) .weekly-menu-table {
+  min-width: 1380px;
+}
+.week-board:not(:has(th:nth-child(8))) .weekly-menu-table {
+  min-width: 850px;
+}
+.is-presenting.dark-board {
+  background: #080d0a;
+}
+@media (max-width: 800px) {
+  .week-board-toolbar {
+    padding: 16px;
+  }
+  .week-navigation b {
+    font-size: 17px;
+  }
+  .week-options {
+    gap: 6px;
+  }
+  .menu-view-switch > span {
+    display: none;
+  }
+  .week-summary {
+    padding: 12px 16px;
+  }
+  .is-presenting {
+    padding: 0 12px 16px;
+  }
+  .week-navigation {
+    gap: 9px;
+  }
+  .week-board-toolbar {
+    gap: 14px;
+  }
+}
+@media print {
+  body:has(.week-board) .sidebar,
+  body:has(.week-board) .admin-header,
+  body:has(.week-board) .admin-footer {
+    display: none;
+  }
+  .week-options,
+  .week-summary,
+  .board-meal-footer button {
+    display: none;
+  }
+  .week-board {
+    border: 0;
+    color: #111;
+    background: white;
+  }
+  .week-board-scroll {
+    overflow: visible;
+  }
+  .weekly-menu-table {
+    min-width: 0 !important;
+  }
+  .weekly-menu-table th,
+  .weekly-menu-table td {
+    width: auto;
+    min-width: 0;
+    background: white !important;
+    color: #111 !important;
+    padding: 7px;
+    font-size: 10px;
+  }
+  .weekly-menu-table .meal-label {
+    width: 40px;
+    min-width: 40px;
+  }
+  .board-dish,
+  .is-presenting .board-dish {
+    font-size: 12px;
+    color: #111 !important;
+  }
+  .week-board.is-presenting {
+    position: static;
+    padding: 0;
+  }
+  .is-presenting .weekly-menu-table td {
+    height: auto;
+  }
+}

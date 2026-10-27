@@ -1,0 +1,2287 @@
+{
+  "schemaVersion": "lona-week-2",
+  "revision": 1,
+  "dataVersion": 1,
+  "weekStart": "2026-10-26",
+  "warehouses": [
+    {
+      "id": "KHO",
+      "name": "Kho khô & gia vị",
+      "purpose": "Hàng khô, gia vị, hàng đóng gói",
+      "location": "Kệ theo mã vị trí"
+    },
+    {
+      "id": "DONG",
+      "name": "Kho đông lạnh",
+      "purpose": "Thịt, cá theo điều kiện bảo quản NCC",
+      "location": "Ngăn theo nhóm hàng"
+    },
+    {
+      "id": "MAT",
+      "name": "Kho mát & hàng trong ngày",
+      "purpose": "Rau, đậu hũ, trứng và hàng nhận trong ngày",
+      "location": "Khay/kệ theo nhóm hàng"
+    }
+  ],
+  "items": [
+    {
+      "id": "GAO",
+      "name": "Gạo thơm",
+      "category": "Đồ khô",
+      "baseUnit": "kg",
+      "warehouseId": "KHO",
+      "stock": 25,
+      "unitCost": 18000,
+      "safety": 5,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "bao 25 kg",
+      "packQuantity": 25,
+      "supplier": "NCC Đồ khô",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 25
+    },
+    {
+      "id": "NEP",
+      "name": "Nếp",
+      "category": "Đồ khô",
+      "baseUnit": "kg",
+      "warehouseId": "KHO",
+      "stock": 10,
+      "unitCost": 22000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "bao 10 kg",
+      "packQuantity": 10,
+      "supplier": "NCC Đồ khô",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 10
+    },
+    {
+      "id": "BUN",
+      "name": "Bún / phở tươi",
+      "category": "Thực phẩm tươi",
+      "baseUnit": "kg",
+      "warehouseId": "MAT",
+      "stock": 12,
+      "unitCost": 18000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 5 kg",
+      "packQuantity": 5,
+      "supplier": "NCC Thực phẩm tươi",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 12
+    },
+    {
+      "id": "NUI",
+      "name": "Nui khô",
+      "category": "Đồ khô",
+      "baseUnit": "kg",
+      "warehouseId": "KHO",
+      "stock": 4,
+      "unitCost": 30000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 1 kg",
+      "packQuantity": 1,
+      "supplier": "NCC Đồ khô",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 4
+    },
+    {
+      "id": "HEO",
+      "name": "Thịt heo",
+      "category": "Thực phẩm tươi",
+      "baseUnit": "kg",
+      "warehouseId": "DONG",
+      "stock": 8,
+      "unitCost": 95000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 1 kg",
+      "packQuantity": 1,
+      "supplier": "NCC Thực phẩm tươi",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": false,
+      "openingStock": 8
+    },
+    {
+      "id": "GA",
+      "name": "Thịt gà",
+      "category": "Thực phẩm tươi",
+      "baseUnit": "kg",
+      "warehouseId": "DONG",
+      "stock": 6,
+      "unitCost": 65000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 2 kg",
+      "packQuantity": 2,
+      "supplier": "NCC Thực phẩm tươi",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": false,
+      "openingStock": 6
+    },
+    {
+      "id": "CA",
+      "name": "Cá phi lê",
+      "category": "Thực phẩm tươi",
+      "baseUnit": "kg",
+      "warehouseId": "DONG",
+      "stock": 6,
+      "unitCost": 70000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 1 kg",
+      "packQuantity": 1,
+      "supplier": "NCC Thực phẩm tươi",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": false,
+      "openingStock": 6
+    },
+    {
+      "id": "TRUNG",
+      "name": "Trứng gà",
+      "category": "Thực phẩm tươi",
+      "baseUnit": "qua",
+      "warehouseId": "MAT",
+      "stock": 60,
+      "unitCost": 2500,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "qua": 1
+      },
+      "packName": "vỉ 30 quả",
+      "packQuantity": 30,
+      "supplier": "NCC Thực phẩm tươi",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": false,
+      "openingStock": 60
+    },
+    {
+      "id": "DAUHU",
+      "name": "Đậu hũ",
+      "category": "Đồ chay",
+      "baseUnit": "kg",
+      "warehouseId": "MAT",
+      "stock": 4,
+      "unitCost": 22000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "khay 1 kg",
+      "packQuantity": 1,
+      "supplier": "NCC Đồ chay",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 4
+    },
+    {
+      "id": "RAU",
+      "name": "Rau cải",
+      "category": "Rau củ",
+      "baseUnit": "kg",
+      "warehouseId": "MAT",
+      "stock": 12,
+      "unitCost": 15000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 2 kg",
+      "packQuantity": 2,
+      "supplier": "NCC Rau củ",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 12
+    },
+    {
+      "id": "CAROT",
+      "name": "Cà rốt",
+      "category": "Rau củ",
+      "baseUnit": "kg",
+      "warehouseId": "MAT",
+      "stock": 5,
+      "unitCost": 18000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 2 kg",
+      "packQuantity": 2,
+      "supplier": "NCC Rau củ",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 5
+    },
+    {
+      "id": "BAP",
+      "name": "Bắp hạt",
+      "category": "Rau củ",
+      "baseUnit": "kg",
+      "warehouseId": "MAT",
+      "stock": 3,
+      "unitCost": 25000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 1 kg",
+      "packQuantity": 1,
+      "supplier": "NCC Rau củ",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 3
+    },
+    {
+      "id": "NAM",
+      "name": "Nấm đông cô",
+      "category": "Rau củ",
+      "baseUnit": "kg",
+      "warehouseId": "MAT",
+      "stock": 1,
+      "unitCost": 90000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 0,5 kg",
+      "packQuantity": 0.5,
+      "supplier": "NCC Rau củ",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 1
+    },
+    {
+      "id": "BIDO",
+      "name": "Bí đỏ",
+      "category": "Rau củ",
+      "baseUnit": "kg",
+      "warehouseId": "MAT",
+      "stock": 5,
+      "unitCost": 20000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 2 kg",
+      "packQuantity": 2,
+      "supplier": "NCC Rau củ",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 5
+    },
+    {
+      "id": "DAUXANH",
+      "name": "Đậu xanh",
+      "category": "Đồ khô",
+      "baseUnit": "kg",
+      "warehouseId": "KHO",
+      "stock": 2,
+      "unitCost": 35000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 1 kg",
+      "packQuantity": 1,
+      "supplier": "NCC Đồ khô",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 2
+    },
+    {
+      "id": "DAUAN",
+      "name": "Dầu ăn",
+      "category": "Gia vị",
+      "baseUnit": "l",
+      "warehouseId": "KHO",
+      "stock": 4,
+      "unitCost": 35000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "ml": 0.001,
+        "l": 1
+      },
+      "packName": "can 5 lít",
+      "packQuantity": 5,
+      "supplier": "NCC Gia vị",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 4
+    },
+    {
+      "id": "GIAVI",
+      "name": "Gia vị phối trộn",
+      "category": "Gia vị",
+      "baseUnit": "kg",
+      "warehouseId": "KHO",
+      "stock": 2,
+      "unitCost": 45000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "g": 0.001,
+        "kg": 1
+      },
+      "packName": "túi 1 kg",
+      "packQuantity": 1,
+      "supplier": "NCC Gia vị",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 2
+    },
+    {
+      "id": "CHUOI",
+      "name": "Chuối",
+      "category": "Trái cây",
+      "baseUnit": "qua",
+      "warehouseId": "MAT",
+      "stock": 50,
+      "unitCost": 3000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "qua": 1
+      },
+      "packName": "nải 10 quả",
+      "packQuantity": 10,
+      "supplier": "NCC Trái cây",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 50
+    },
+    {
+      "id": "SUACHUA",
+      "name": "Sữa chua",
+      "category": "Đóng gói",
+      "baseUnit": "hop",
+      "warehouseId": "MAT",
+      "stock": 40,
+      "unitCost": 5000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "hop": 1
+      },
+      "packName": "thùng 48 hộp",
+      "packQuantity": 48,
+      "supplier": "NCC Đóng gói",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 40
+    },
+    {
+      "id": "BANHMI",
+      "name": "Bánh mì",
+      "category": "Đóng gói",
+      "baseUnit": "cai",
+      "warehouseId": "KHO",
+      "stock": 30,
+      "unitCost": 4000,
+      "safety": 0,
+      "reserved": 0,
+      "conversions": {
+        "cai": 1
+      },
+      "packName": "túi 10 cái",
+      "packQuantity": 10,
+      "supplier": "NCC Đóng gói",
+      "bin": "Kệ A1",
+      "storageNote": "Bảo quản theo hướng dẫn nhà cung cấp.",
+      "vegetarianAllowed": true,
+      "openingStock": 30
+    }
+  ],
+  "dishes": [
+    {
+      "id": "SOT",
+      "name": "Sốt cà rốt mẫu",
+      "group": "Bán thành phẩm",
+      "recipeId": "R-SOT",
+      "isSubrecipe": true
+    },
+    {
+      "id": "COM",
+      "name": "Cơm trắng",
+      "group": "Cơm",
+      "recipeId": "R-COM",
+      "isSubrecipe": false
+    },
+    {
+      "id": "COMNS",
+      "name": "Cơm rau củ",
+      "group": "Cơm",
+      "recipeId": "R-COMNS",
+      "isSubrecipe": false
+    },
+    {
+      "id": "HEOKHO",
+      "name": "Thịt heo kho",
+      "group": "Món chính",
+      "recipeId": "R-HEOKHO",
+      "isSubrecipe": false
+    },
+    {
+      "id": "GAKHO",
+      "name": "Gà kho",
+      "group": "Món chính",
+      "recipeId": "R-GAKHO",
+      "isSubrecipe": false
+    },
+    {
+      "id": "CAHAP",
+      "name": "Cá hấp sốt cà rốt",
+      "group": "Món chính",
+      "recipeId": "R-CAHAP",
+      "isSubrecipe": false
+    },
+    {
+      "id": "DAUSOT",
+      "name": "Đậu hũ sốt",
+      "group": "Món chay",
+      "recipeId": "R-DAUSOT",
+      "isSubrecipe": false
+    },
+    {
+      "id": "TRUNGCHI",
+      "name": "Trứng chiên",
+      "group": "Món phụ",
+      "recipeId": "R-TRUNGCHI",
+      "isSubrecipe": false
+    },
+    {
+      "id": "RAUXAO",
+      "name": "Rau cải xào",
+      "group": "Rau",
+      "recipeId": "R-RAUXAO",
+      "isSubrecipe": false
+    },
+    {
+      "id": "CAROTLUOC",
+      "name": "Cà rốt luộc",
+      "group": "Rau",
+      "recipeId": "R-CAROTLUOC",
+      "isSubrecipe": false
+    },
+    {
+      "id": "CANHBIDO",
+      "name": "Canh bí đỏ",
+      "group": "Canh",
+      "recipeId": "R-CANHBIDO",
+      "isSubrecipe": false
+    },
+    {
+      "id": "CANHRAU",
+      "name": "Canh rau",
+      "group": "Canh",
+      "recipeId": "R-CANHRAU",
+      "isSubrecipe": false
+    },
+    {
+      "id": "CHUOI",
+      "name": "Chuối",
+      "group": "Tráng miệng",
+      "recipeId": "R-CHUOI",
+      "isSubrecipe": false
+    },
+    {
+      "id": "SUACHUA",
+      "name": "Sữa chua",
+      "group": "Tráng miệng",
+      "recipeId": "R-SUACHUA",
+      "isSubrecipe": false
+    },
+    {
+      "id": "PHOGA",
+      "name": "Phở gà",
+      "group": "Món sáng",
+      "recipeId": "R-PHOGA",
+      "isSubrecipe": false
+    },
+    {
+      "id": "BUNHEO",
+      "name": "Bún thịt",
+      "group": "Món sáng",
+      "recipeId": "R-BUNHEO",
+      "isSubrecipe": false
+    },
+    {
+      "id": "NUIGA",
+      "name": "Nui gà",
+      "group": "Món sáng",
+      "recipeId": "R-NUIGA",
+      "isSubrecipe": false
+    },
+    {
+      "id": "XOI",
+      "name": "Xôi đậu xanh",
+      "group": "Món sáng",
+      "recipeId": "R-XOI",
+      "isSubrecipe": false
+    },
+    {
+      "id": "BANHMI",
+      "name": "Bánh mì trứng",
+      "group": "Món sáng",
+      "recipeId": "R-BANHMI",
+      "isSubrecipe": false
+    },
+    {
+      "id": "CHAO",
+      "name": "Cháo thịt",
+      "group": "Món sáng",
+      "recipeId": "R-CHAO",
+      "isSubrecipe": false
+    },
+    {
+      "id": "BUNCA",
+      "name": "Bún cá",
+      "group": "Món sáng",
+      "recipeId": "R-BUNCA",
+      "isSubrecipe": false
+    }
+  ],
+  "recipes": [
+    {
+      "id": "R-SOT",
+      "dishId": "SOT",
+      "name": "Sốt cà rốt mẫu",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 2,
+      "yieldUnit": "kg",
+      "lines": [
+        {
+          "id": "SOT-1",
+          "kind": "item",
+          "itemId": "CAROT",
+          "quantity": 1500,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "SOT-2",
+          "kind": "item",
+          "itemId": "DAUAN",
+          "quantity": 100,
+          "unit": "ml",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "SOT-3",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 50,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "SOT-4",
+          "kind": "auxiliary",
+          "name": "Nước",
+          "quantity": 500,
+          "unit": "ml",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-COM",
+      "dishId": "COM",
+      "name": "Cơm trắng",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "COM-1",
+          "kind": "item",
+          "itemId": "GAO",
+          "quantity": 82,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "COM-2",
+          "kind": "auxiliary",
+          "name": "Nước nấu cơm",
+          "quantity": 120,
+          "unit": "ml",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-COMNS",
+      "dishId": "COMNS",
+      "name": "Cơm rau củ",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "COMNS-1",
+          "kind": "item",
+          "itemId": "GAO",
+          "quantity": 73,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "COMNS-2",
+          "kind": "item",
+          "itemId": "CAROT",
+          "quantity": 15,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "COMNS-3",
+          "kind": "item",
+          "itemId": "BAP",
+          "quantity": 10,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "COMNS-4",
+          "kind": "item",
+          "itemId": "NAM",
+          "quantity": 2,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-HEOKHO",
+      "dishId": "HEOKHO",
+      "name": "Thịt heo kho",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "HEOKHO-1",
+          "kind": "item",
+          "itemId": "HEO",
+          "quantity": 65,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "HEOKHO-2",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 4,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "HEOKHO-3",
+          "kind": "item",
+          "itemId": "DAUAN",
+          "quantity": 3,
+          "unit": "ml",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-GAKHO",
+      "dishId": "GAKHO",
+      "name": "Gà kho",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "GAKHO-1",
+          "kind": "item",
+          "itemId": "GA",
+          "quantity": 85,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "GAKHO-2",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 4,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "GAKHO-3",
+          "kind": "item",
+          "itemId": "DAUAN",
+          "quantity": 3,
+          "unit": "ml",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-CAHAP",
+      "dishId": "CAHAP",
+      "name": "Cá hấp sốt cà rốt",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "CAHAP-1",
+          "kind": "item",
+          "itemId": "CA",
+          "quantity": 70,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "CAHAP-2",
+          "kind": "recipe",
+          "recipeId": "R-SOT",
+          "quantity": 15,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-DAUSOT",
+      "dishId": "DAUSOT",
+      "name": "Đậu hũ sốt",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "DAUSOT-1",
+          "kind": "item",
+          "itemId": "DAUHU",
+          "quantity": 90,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "DAUSOT-2",
+          "kind": "recipe",
+          "recipeId": "R-SOT",
+          "quantity": 10,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-TRUNGCHI",
+      "dishId": "TRUNGCHI",
+      "name": "Trứng chiên",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "TRUNGCHI-1",
+          "kind": "item",
+          "itemId": "TRUNG",
+          "quantity": 0.5,
+          "unit": "qua",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "TRUNGCHI-2",
+          "kind": "item",
+          "itemId": "DAUAN",
+          "quantity": 3,
+          "unit": "ml",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-RAUXAO",
+      "dishId": "RAUXAO",
+      "name": "Rau cải xào",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "RAUXAO-1",
+          "kind": "item",
+          "itemId": "RAU",
+          "quantity": 80,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "RAUXAO-2",
+          "kind": "item",
+          "itemId": "DAUAN",
+          "quantity": 4,
+          "unit": "ml",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "RAUXAO-3",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 2,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-CAROTLUOC",
+      "dishId": "CAROTLUOC",
+      "name": "Cà rốt luộc",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "CAROTLUOC-1",
+          "kind": "item",
+          "itemId": "CAROT",
+          "quantity": 50,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-CANHBIDO",
+      "dishId": "CANHBIDO",
+      "name": "Canh bí đỏ",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "CANHBIDO-1",
+          "kind": "item",
+          "itemId": "BIDO",
+          "quantity": 65,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "CANHBIDO-2",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 2,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "CANHBIDO-3",
+          "kind": "auxiliary",
+          "name": "Nước canh",
+          "quantity": 200,
+          "unit": "ml",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-CANHRAU",
+      "dishId": "CANHRAU",
+      "name": "Canh rau",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "CANHRAU-1",
+          "kind": "item",
+          "itemId": "RAU",
+          "quantity": 50,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "CANHRAU-2",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 2,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-CHUOI",
+      "dishId": "CHUOI",
+      "name": "Chuối",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "CHUOI-1",
+          "kind": "item",
+          "itemId": "CHUOI",
+          "quantity": 1,
+          "unit": "qua",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-SUACHUA",
+      "dishId": "SUACHUA",
+      "name": "Sữa chua",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "SUACHUA-1",
+          "kind": "item",
+          "itemId": "SUACHUA",
+          "quantity": 1,
+          "unit": "hop",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-PHOGA",
+      "dishId": "PHOGA",
+      "name": "Phở gà",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "PHOGA-1",
+          "kind": "item",
+          "itemId": "BUN",
+          "quantity": 180,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "PHOGA-2",
+          "kind": "item",
+          "itemId": "GA",
+          "quantity": 65,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "PHOGA-3",
+          "kind": "item",
+          "itemId": "RAU",
+          "quantity": 20,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "PHOGA-4",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 5,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-BUNHEO",
+      "dishId": "BUNHEO",
+      "name": "Bún thịt",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "BUNHEO-1",
+          "kind": "item",
+          "itemId": "BUN",
+          "quantity": 180,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "BUNHEO-2",
+          "kind": "item",
+          "itemId": "HEO",
+          "quantity": 55,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "BUNHEO-3",
+          "kind": "item",
+          "itemId": "RAU",
+          "quantity": 25,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "BUNHEO-4",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 5,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-NUIGA",
+      "dishId": "NUIGA",
+      "name": "Nui gà",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "NUIGA-1",
+          "kind": "item",
+          "itemId": "NUI",
+          "quantity": 80,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "NUIGA-2",
+          "kind": "item",
+          "itemId": "GA",
+          "quantity": 65,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "NUIGA-3",
+          "kind": "item",
+          "itemId": "CAROT",
+          "quantity": 20,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "NUIGA-4",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 5,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-XOI",
+      "dishId": "XOI",
+      "name": "Xôi đậu xanh",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "XOI-1",
+          "kind": "item",
+          "itemId": "NEP",
+          "quantity": 65,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "XOI-2",
+          "kind": "item",
+          "itemId": "DAUXANH",
+          "quantity": 18,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-BANHMI",
+      "dishId": "BANHMI",
+      "name": "Bánh mì trứng",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "BANHMI-1",
+          "kind": "item",
+          "itemId": "BANHMI",
+          "quantity": 1,
+          "unit": "cai",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "BANHMI-2",
+          "kind": "item",
+          "itemId": "TRUNG",
+          "quantity": 1,
+          "unit": "qua",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "BANHMI-3",
+          "kind": "item",
+          "itemId": "DAUAN",
+          "quantity": 3,
+          "unit": "ml",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-CHAO",
+      "dishId": "CHAO",
+      "name": "Cháo thịt",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "CHAO-1",
+          "kind": "item",
+          "itemId": "GAO",
+          "quantity": 45,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "CHAO-2",
+          "kind": "item",
+          "itemId": "HEO",
+          "quantity": 25,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "CHAO-3",
+          "kind": "item",
+          "itemId": "CAROT",
+          "quantity": 15,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "CHAO-4",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 3,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    },
+    {
+      "id": "R-BUNCA",
+      "dishId": "BUNCA",
+      "name": "Bún cá",
+      "version": 1,
+      "approved": true,
+      "yieldQuantity": 1,
+      "yieldUnit": "suat",
+      "lines": [
+        {
+          "id": "BUNCA-1",
+          "kind": "item",
+          "itemId": "BUN",
+          "quantity": 180,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "BUNCA-2",
+          "kind": "item",
+          "itemId": "CA",
+          "quantity": 60,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "BUNCA-3",
+          "kind": "item",
+          "itemId": "RAU",
+          "quantity": 20,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        },
+        {
+          "id": "BUNCA-4",
+          "kind": "item",
+          "itemId": "GIAVI",
+          "quantity": 5,
+          "unit": "g",
+          "basis": "raw",
+          "yieldRate": 1
+        }
+      ]
+    }
+  ],
+  "plans": [
+    {
+      "id": "2026-10-26-SANG",
+      "date": "2026-10-26",
+      "meal": "SANG",
+      "normal": 80,
+      "vegetarian": 0,
+      "replacement": 0,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-26-CHIEU",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "normal": 100,
+      "vegetarian": 5,
+      "replacement": 10,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-27-SANG",
+      "date": "2026-10-27",
+      "meal": "SANG",
+      "normal": 80,
+      "vegetarian": 0,
+      "replacement": 0,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-27-CHIEU",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "normal": 100,
+      "vegetarian": 5,
+      "replacement": 10,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-28-SANG",
+      "date": "2026-10-28",
+      "meal": "SANG",
+      "normal": 80,
+      "vegetarian": 0,
+      "replacement": 0,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-28-CHIEU",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "normal": 100,
+      "vegetarian": 5,
+      "replacement": 10,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-29-SANG",
+      "date": "2026-10-29",
+      "meal": "SANG",
+      "normal": 80,
+      "vegetarian": 0,
+      "replacement": 0,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-29-CHIEU",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "normal": 100,
+      "vegetarian": 5,
+      "replacement": 10,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-30-SANG",
+      "date": "2026-10-30",
+      "meal": "SANG",
+      "normal": 80,
+      "vegetarian": 0,
+      "replacement": 0,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-30-CHIEU",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "normal": 100,
+      "vegetarian": 5,
+      "replacement": 10,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-31-SANG",
+      "date": "2026-10-31",
+      "meal": "SANG",
+      "normal": 80,
+      "vegetarian": 0,
+      "replacement": 0,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-10-31-CHIEU",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "normal": 100,
+      "vegetarian": 5,
+      "replacement": 10,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-11-01-SANG",
+      "date": "2026-11-01",
+      "meal": "SANG",
+      "normal": 80,
+      "vegetarian": 0,
+      "replacement": 0,
+      "replacementIncluded": true,
+      "approved": true
+    },
+    {
+      "id": "2026-11-01-CHIEU",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "normal": 100,
+      "vegetarian": 5,
+      "replacement": 10,
+      "replacementIncluded": true,
+      "approved": true
+    }
+  ],
+  "menus": [
+    {
+      "id": "M-1",
+      "date": "2026-10-26",
+      "meal": "SANG",
+      "slot": "Món sáng",
+      "dishId": "PHOGA",
+      "recipeId": "R-PHOGA",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-2",
+      "date": "2026-10-26",
+      "meal": "SANG",
+      "slot": "Tráng miệng",
+      "dishId": "CHUOI",
+      "recipeId": "R-CHUOI",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-3",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "slot": "Cơm",
+      "dishId": "COM",
+      "recipeId": "R-COM",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-4",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "slot": "Món chính",
+      "dishId": "HEOKHO",
+      "recipeId": "R-HEOKHO",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-5",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "slot": "Món phụ 1",
+      "dishId": "TRUNGCHI",
+      "recipeId": "R-TRUNGCHI",
+      "scope": "normal",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-6",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "slot": "Món phụ 2",
+      "dishId": "CAROTLUOC",
+      "recipeId": "R-CAROTLUOC",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-7",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "slot": "Rau",
+      "dishId": "RAUXAO",
+      "recipeId": "R-RAUXAO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-8",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "slot": "Canh",
+      "dishId": "CANHBIDO",
+      "recipeId": "R-CANHBIDO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-9",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "slot": "Tráng miệng",
+      "dishId": "CHUOI",
+      "recipeId": "R-CHUOI",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-10",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "slot": "Món chay",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "vegetarian",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-11",
+      "date": "2026-10-26",
+      "meal": "CHIEU",
+      "slot": "Món thay thế",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "replacement",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-12",
+      "date": "2026-10-27",
+      "meal": "SANG",
+      "slot": "Món sáng",
+      "dishId": "BUNHEO",
+      "recipeId": "R-BUNHEO",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-13",
+      "date": "2026-10-27",
+      "meal": "SANG",
+      "slot": "Tráng miệng",
+      "dishId": "SUACHUA",
+      "recipeId": "R-SUACHUA",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-14",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "slot": "Cơm",
+      "dishId": "COMNS",
+      "recipeId": "R-COMNS",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-15",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "slot": "Món chính",
+      "dishId": "GAKHO",
+      "recipeId": "R-GAKHO",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-16",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "slot": "Món phụ 1",
+      "dishId": "TRUNGCHI",
+      "recipeId": "R-TRUNGCHI",
+      "scope": "normal",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-17",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "slot": "Món phụ 2",
+      "dishId": "CAROTLUOC",
+      "recipeId": "R-CAROTLUOC",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-18",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "slot": "Rau",
+      "dishId": "RAUXAO",
+      "recipeId": "R-RAUXAO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-19",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "slot": "Canh",
+      "dishId": "CANHRAU",
+      "recipeId": "R-CANHRAU",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-20",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "slot": "Tráng miệng",
+      "dishId": "SUACHUA",
+      "recipeId": "R-SUACHUA",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-21",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "slot": "Món chay",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "vegetarian",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-22",
+      "date": "2026-10-27",
+      "meal": "CHIEU",
+      "slot": "Món thay thế",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "replacement",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-23",
+      "date": "2026-10-28",
+      "meal": "SANG",
+      "slot": "Món sáng",
+      "dishId": "NUIGA",
+      "recipeId": "R-NUIGA",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-24",
+      "date": "2026-10-28",
+      "meal": "SANG",
+      "slot": "Tráng miệng",
+      "dishId": "CHUOI",
+      "recipeId": "R-CHUOI",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-25",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "slot": "Cơm",
+      "dishId": "COM",
+      "recipeId": "R-COM",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-26",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "slot": "Món chính",
+      "dishId": "CAHAP",
+      "recipeId": "R-CAHAP",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-27",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "slot": "Món phụ 1",
+      "dishId": "TRUNGCHI",
+      "recipeId": "R-TRUNGCHI",
+      "scope": "normal",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-28",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "slot": "Món phụ 2",
+      "dishId": "CAROTLUOC",
+      "recipeId": "R-CAROTLUOC",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-29",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "slot": "Rau",
+      "dishId": "RAUXAO",
+      "recipeId": "R-RAUXAO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-30",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "slot": "Canh",
+      "dishId": "CANHBIDO",
+      "recipeId": "R-CANHBIDO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-31",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "slot": "Tráng miệng",
+      "dishId": "CHUOI",
+      "recipeId": "R-CHUOI",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-32",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "slot": "Món chay",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "vegetarian",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-33",
+      "date": "2026-10-28",
+      "meal": "CHIEU",
+      "slot": "Món thay thế",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "replacement",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-34",
+      "date": "2026-10-29",
+      "meal": "SANG",
+      "slot": "Món sáng",
+      "dishId": "XOI",
+      "recipeId": "R-XOI",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-35",
+      "date": "2026-10-29",
+      "meal": "SANG",
+      "slot": "Tráng miệng",
+      "dishId": "SUACHUA",
+      "recipeId": "R-SUACHUA",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-36",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "slot": "Cơm",
+      "dishId": "COMNS",
+      "recipeId": "R-COMNS",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-37",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "slot": "Món chính",
+      "dishId": "GAKHO",
+      "recipeId": "R-GAKHO",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-38",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "slot": "Món phụ 1",
+      "dishId": "TRUNGCHI",
+      "recipeId": "R-TRUNGCHI",
+      "scope": "normal",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-39",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "slot": "Món phụ 2",
+      "dishId": "CAROTLUOC",
+      "recipeId": "R-CAROTLUOC",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-40",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "slot": "Rau",
+      "dishId": "RAUXAO",
+      "recipeId": "R-RAUXAO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-41",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "slot": "Canh",
+      "dishId": "CANHRAU",
+      "recipeId": "R-CANHRAU",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-42",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "slot": "Tráng miệng",
+      "dishId": "SUACHUA",
+      "recipeId": "R-SUACHUA",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-43",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "slot": "Món chay",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "vegetarian",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-44",
+      "date": "2026-10-29",
+      "meal": "CHIEU",
+      "slot": "Món thay thế",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "replacement",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-45",
+      "date": "2026-10-30",
+      "meal": "SANG",
+      "slot": "Món sáng",
+      "dishId": "BANHMI",
+      "recipeId": "R-BANHMI",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-46",
+      "date": "2026-10-30",
+      "meal": "SANG",
+      "slot": "Tráng miệng",
+      "dishId": "CHUOI",
+      "recipeId": "R-CHUOI",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-47",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "slot": "Cơm",
+      "dishId": "COM",
+      "recipeId": "R-COM",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-48",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "slot": "Món chính",
+      "dishId": "HEOKHO",
+      "recipeId": "R-HEOKHO",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-49",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "slot": "Món phụ 1",
+      "dishId": "TRUNGCHI",
+      "recipeId": "R-TRUNGCHI",
+      "scope": "normal",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-50",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "slot": "Món phụ 2",
+      "dishId": "CAROTLUOC",
+      "recipeId": "R-CAROTLUOC",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-51",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "slot": "Rau",
+      "dishId": "RAUXAO",
+      "recipeId": "R-RAUXAO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-52",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "slot": "Canh",
+      "dishId": "CANHBIDO",
+      "recipeId": "R-CANHBIDO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-53",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "slot": "Tráng miệng",
+      "dishId": "CHUOI",
+      "recipeId": "R-CHUOI",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-54",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "slot": "Món chay",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "vegetarian",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-55",
+      "date": "2026-10-30",
+      "meal": "CHIEU",
+      "slot": "Món thay thế",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "replacement",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-56",
+      "date": "2026-10-31",
+      "meal": "SANG",
+      "slot": "Món sáng",
+      "dishId": "CHAO",
+      "recipeId": "R-CHAO",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-57",
+      "date": "2026-10-31",
+      "meal": "SANG",
+      "slot": "Tráng miệng",
+      "dishId": "SUACHUA",
+      "recipeId": "R-SUACHUA",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-58",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "slot": "Cơm",
+      "dishId": "COMNS",
+      "recipeId": "R-COMNS",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-59",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "slot": "Món chính",
+      "dishId": "CAHAP",
+      "recipeId": "R-CAHAP",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-60",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "slot": "Món phụ 1",
+      "dishId": "TRUNGCHI",
+      "recipeId": "R-TRUNGCHI",
+      "scope": "normal",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-61",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "slot": "Món phụ 2",
+      "dishId": "CAROTLUOC",
+      "recipeId": "R-CAROTLUOC",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-62",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "slot": "Rau",
+      "dishId": "RAUXAO",
+      "recipeId": "R-RAUXAO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-63",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "slot": "Canh",
+      "dishId": "CANHRAU",
+      "recipeId": "R-CANHRAU",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-64",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "slot": "Tráng miệng",
+      "dishId": "SUACHUA",
+      "recipeId": "R-SUACHUA",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-65",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "slot": "Món chay",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "vegetarian",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-66",
+      "date": "2026-10-31",
+      "meal": "CHIEU",
+      "slot": "Món thay thế",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "replacement",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-67",
+      "date": "2026-11-01",
+      "meal": "SANG",
+      "slot": "Món sáng",
+      "dishId": "BUNCA",
+      "recipeId": "R-BUNCA",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-68",
+      "date": "2026-11-01",
+      "meal": "SANG",
+      "slot": "Tráng miệng",
+      "dishId": "CHUOI",
+      "recipeId": "R-CHUOI",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-69",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "slot": "Cơm",
+      "dishId": "COM",
+      "recipeId": "R-COM",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-70",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "slot": "Món chính",
+      "dishId": "GAKHO",
+      "recipeId": "R-GAKHO",
+      "scope": "main",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-71",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "slot": "Món phụ 1",
+      "dishId": "TRUNGCHI",
+      "recipeId": "R-TRUNGCHI",
+      "scope": "normal",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-72",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "slot": "Món phụ 2",
+      "dishId": "CAROTLUOC",
+      "recipeId": "R-CAROTLUOC",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-73",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "slot": "Rau",
+      "dishId": "RAUXAO",
+      "recipeId": "R-RAUXAO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-74",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "slot": "Canh",
+      "dishId": "CANHBIDO",
+      "recipeId": "R-CANHBIDO",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-75",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "slot": "Tráng miệng",
+      "dishId": "CHUOI",
+      "recipeId": "R-CHUOI",
+      "scope": "shared",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-76",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "slot": "Món chay",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "vegetarian",
+      "fixedServings": 0
+    },
+    {
+      "id": "M-77",
+      "date": "2026-11-01",
+      "meal": "CHIEU",
+      "slot": "Món thay thế",
+      "dishId": "DAUSOT",
+      "recipeId": "R-DAUSOT",
+      "scope": "replacement",
+      "fixedServings": 0
+    }
+  ],
+  "orders": [],
+  "ledger": [],
+  "issuedDates": [],
+  "audit": [],
+  "requests": {}
+}
