@@ -50,6 +50,8 @@ public sealed partial class OperationsStore {
         s["allowedWarehouses"]=new JsonArray(scopes.Select(x=>JsonValue.Create(x)).ToArray());
         s.Remove("base");
         s.Remove("requests");
+        s.Remove("purchaseEdits"); // full before/after snapshots stay private; scoped per-line history is public
+
         if(user.Role!="admin")s.Remove("scopes");
         var balances=s["balances"]!.AsObject();
         foreach(var k in balances.Select(x=>x.Key).ToArray())if(!scopes.Contains(k.Split('|')[0]))balances.Remove(k);

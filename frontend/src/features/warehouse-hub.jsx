@@ -132,6 +132,11 @@ export function WarehouseHub({
         ? "PARTIAL"
         : "APPROVED",
   }));
+  const statusLabel = (value, kind = page) => kind === "purchase" && value === "APPROVED" ? "Chưa nhận hàng" : labels[value];
+  function editPurchase(d) {
+    setSelected(null); setValidation([]); setLocalError(""); setImported(false);
+    setForm({kind:"purchase", editing:true, id:d.id, number:d.number, warehouseId:d.warehouseId, due:d.dueDate, supplier:d.supplier || "", reason:"", reference:d.reference || "", editReason:"", lines:d.lines.map(l=>({...l, unit:item(l.itemId)?.unit}))});
+  }
   const setPage = (p) => {
     location.hash = p;
     setSelected(null);
@@ -224,7 +229,7 @@ export function WarehouseHub({
       if (
         await action(
           form.kind === "purchase"
-            ? "purchaseBatch"
+            ? (form.editing ? "purchaseUpdate" : "purchaseBatch")
             : form.kind === "transfers"
               ? "transferBatch"
               : "issueManual",
@@ -232,7 +237,7 @@ export function WarehouseHub({
         )
       ) {
         setForm(null);
-        notify("Đã lập phiếu. Mở Chi tiết để xử lý bước tiếp theo.");
+        notify(form.editing ? "Đã lưu sửa phiếu; tồn kho và phiếu nhập giữ nguyên." : "Đã lập phiếu. Mở Chi tiết để xử lý bước tiếp theo.");
       }
     } catch (e) {
       setLocalError(e.message);
@@ -507,7 +512,7 @@ export function WarehouseHub({
                 )
                 .map(([k, v]) => (
                   <option key={k} value={k}>
-                    {v}
+                    {statusLabel(k)}
                   </option>
                 ))}
             </select>
@@ -605,14 +610,9 @@ export function WarehouseHub({
                     : "warning")
                 }
               >
-                {labels[d.status]}
+                {statusLabel(d.status)}
               </span>,
-              <Button
-                icon="eye"
-                onClick={() => setSelected({ kind: page, id: d.id })}
-              >
-                Chi tiết
-              </Button>,
+              <div className="actions"><Button icon="eye" onClick={() => setSelected({kind:page,id:d.id})}>Chi tiết</Button>{page === "purchase" && <Button icon="edit" disabled={busy || acting || !can("purchase.create") || !scope(d.warehouseId) || d.status === "RECEIVED"} onClick={()=>editPurchase(d)}>Sửa</Button>}</div>,
             ])}
           />
         )}
@@ -664,7 +664,7 @@ export function WarehouseHub({
               <div className="document-facts">
                 <span>
                   <small>Trạng thái</small>
-                  <b>{labels[doc.status]}</b>
+                  <b>{statusLabel(doc.status, selected.kind)}</b>
                 </span>
                 <span>
                   <small>Kho / tuyến</small>
@@ -724,6 +724,7 @@ export function WarehouseHub({
                       : 2
                 }
               />
+              {selected.kind === "purchase" && <div className="form-warning"><p>{doc.status === "RECEIVED" ? "Phiếu đã nhận đủ: khóa sửa phiếu gốc. Cần chứng từ điều chỉnh/trả hàng; bản demo chưa hỗ trợ luồng này." : !can("purchase.create") || !scope(doc.warehouseId) ? "Bạn chưa có quyền sửa phiếu tại kho này." : doc.status === "PARTIAL" ? "Đã nhận một phần: không đổi kho, không xóa/đổi hàng đã nhận, không giảm lượng đặt dưới lượng đã nhận. Sửa không thay đổi tồn hoặc phiếu nhập đã ghi." : "Chưa nhận hàng: được sửa kho, nhà cung cấp, ngày và các dòng hàng. Bắt buộc ghi lý do sửa."}</p>{doc.status !== "RECEIVED" && can("purchase.create") && scope(doc.warehouseId) && <Button icon="edit" disabled={busy || acting} onClick={()=>editPurchase(doc)}>Sửa phiếu mua</Button>}</div>}
               <h3>Hàng hóa trên phiếu</h3>
               <div className="detail-lines">
                 {docLines.map((l, i) => {
@@ -1056,7 +1057,7 @@ export function WarehouseHub({
           >
             <header>
               <div>
-                <small>Phiếu mới</small>
+                <small>{form.editing ? "Sửa phiếu " + form.number : "Phiếu mới"}</small>
                 <h2>
                   {form.kind === "purchase"
                     ? "Đề nghị mua hàng"
@@ -1082,6 +1083,7 @@ export function WarehouseHub({
                         Kho nhận
                         <select
                           value={form.warehouseId}
+                          disabled={form.editing && form.lines.some(l=>l.received>0)}
                           onChange={(e) =>
                             setForm({ ...form, warehouseId: e.target.value })
                           }
@@ -1183,7 +1185,8 @@ export function WarehouseHub({
                     </select>
                   </label>
                 </div>
-                <div className="import-strip">
+                {form.editing && <label>Lý do sửa (bắt buộc)<input required maxLength={500} value={form.editReason} onChange={e=>setForm({...form,editReason:e.target.value})}/></label>}
+                {!form.editing && <div className="import-strip">
                   <div>
                     <b>Nhập nhiều hàng bằng CSV</b>
                     <small>
@@ -1216,6 +1219,7 @@ export function WarehouseHub({
                     />
                   </label>
                 </div>
+                }
                 {validation.length > 0 && (
                   <div className="import-result">
                     <b>
@@ -1252,6 +1256,7 @@ export function WarehouseHub({
                     <select
                       aria-label={"Hàng dòng " + (i + 1)}
                       value={l.itemId}
+                      disabled={form.editing && l.received > 0}
                       onChange={(e) =>
                         updateLine(i, {
                           itemId: e.target.value,
@@ -1269,7 +1274,7 @@ export function WarehouseHub({
                       required
                       aria-label={"Lượng dòng " + (i + 1)}
                       type="number"
-                      min="0.001"
+                      min={form.editing ? Math.max(0.001,l.received || 0) : "0.001"}
                       step="0.001"
                       value={l.quantity}
                       onChange={(e) =>
@@ -1280,7 +1285,7 @@ export function WarehouseHub({
                     <button
                       type="button"
                       aria-label={"Xóa dòng " + (i + 1)}
-                      disabled={form.lines.length === 1}
+                      disabled={form.lines.length === 1 || (form.editing && l.received > 0)}
                       onClick={() => {
                         setForm({
                           ...form,
@@ -1342,7 +1347,7 @@ export function WarehouseHub({
                       ? "Đang ghi…"
                       : form.kind === "issues"
                         ? "Xác nhận xuất kho"
-                        : "Lập phiếu"}
+                        : form.editing ? "Lưu thay đổi" : "Lập phiếu"}
                   </Button>
                 </div>
               </fieldset>

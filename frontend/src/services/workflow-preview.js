@@ -20,7 +20,7 @@ export function workflowPreview(state, type, p) {
         at,
       });
     };
-  if (["purchaseBatch", "transferBatch", "issueManual"].includes(type)) {
+  if (["purchaseUpdate", "purchaseBatch", "transferBatch", "issueManual"].includes(type)) {
     if (!p.lines?.length) throw Error("Phiếu cần dòng hàng.");
     const seen = new Set();
     for (const l of p.lines) {
@@ -38,7 +38,17 @@ export function workflowPreview(state, type, p) {
     if (p.importKey && s.importKeys[p.importKey])
       throw Error("Đã import nội dung này.");
   }
-  if (type === "purchaseBatch") {
+  if (type === "purchaseUpdate") {
+    const original=s.orders.find(o=>o.id===p.id);if(!original)throw Error("Không tìm thấy phiếu mua.");
+    const group=s.orders.filter(o=>original.batchId?o.batchId===original.batchId:o.id===original.id);
+    if(group.every(o=>o.received>=o.quantity))throw Error("Phiếu đã nhận đủ; không sửa phiếu gốc.");
+    if(!p.supplier?.trim() || !p.editReason?.trim() || p.editReason.length>500 || !/^\d{4}-\d{2}-\d{2}$/.test(p.dueDate) || !s.warehouses.some(w=>w.id===p.warehouseId&&!['TRANSIT','PRODUCTION'].includes(w.id)))throw Error("Nhập kho, ngày, nhà cung cấp và lý do sửa hợp lệ.");
+    if(group.some(o=>o.received>0)&&p.warehouseId!==original.warehouseId)throw Error("Đã nhận hàng; không đổi kho.");
+    const ids=p.lines.filter(l=>l.id).map(l=>l.id);if(new Set(ids).size!==ids.length||ids.some(id=>!group.some(o=>o.id===id)))throw Error("Dòng hàng nguồn không hợp lệ.");
+    for(const o of group.filter(o=>o.received>0)){const l=p.lines.find(l=>l.id===o.id);if(!l||l.itemId!==o.itemId||l.quantity<o.received)throw Error("Không xóa/đổi hàng đã nhận hoặc giảm dưới lượng đã nhận.");}
+    const updated=p.lines.map(l=>{const prev=group.find(o=>o.id===l.id);const o={...(prev||original),id:prev?.id||id(),batchId:original.batchId||original.id,received:prev?.received||0,warehouseId:p.warehouseId,itemId:l.itemId,quantity:l.quantity,dueDate:p.dueDate,supplier:p.supplier.trim(),history:[...(prev?.history||[]),{label:"Sửa phiếu: "+p.editReason,actor:"preview",at}]};delete o.packs;delete o.packName;return o;});
+    s.orders=s.orders.filter(o=>!group.includes(o)).concat(updated);s.purchaseEdits||=[];s.purchaseEdits.push({number:original.number,before:group,after:structuredClone(updated),reason:p.editReason,actor:"preview",at});
+  } else if (type === "purchaseBatch") {
     const batchId = id(),
       number = "DM-" + String(s.orders.length + 1).padStart(5, "0");
     for (const l of p.lines)

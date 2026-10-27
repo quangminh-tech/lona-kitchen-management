@@ -3,7 +3,7 @@ using Lona.Admin.Auth;
 using Lona.Week;
 namespace Lona.Admin.Operations;
 public sealed partial class OperationsStore {
-    static readonly HashSet<string> WorkflowCommands=["purchaseBatch","transferBatch","issueManual","menuImport","loadDemo"];
+    static readonly HashSet<string> WorkflowCommands=["purchaseUpdate","purchaseBatch","transferBatch","issueManual","menuImport","loadDemo"];
     void Workflow(JsonObject s,string type,JsonObject p,UserRecord user,HashSet<string> permissions){
         void Permission(string key){if(!permissions.Contains(key))throw new UnauthorizedAccessException("Thiếu quyền "+key);}
         bool Physical(string w)=>Rows(s,"warehouses").Any(x=>T(x,"id")==w)&&w is not "TRANSIT" and not "PRODUCTION";
@@ -58,7 +58,30 @@ public sealed partial class OperationsStore {
         Need(lines.Select(l=>T(l,"itemId")).Distinct().Count()==lines.Count,"Mã hàng bị lặp; gộp lượng trước khi lập phiếu.");
         foreach(var l in lines){var item=Rows(s,"items").FirstOrDefault(i=>T(i,"id")==T(l,"itemId"));Need(item is not null&&N(l,"quantity")>0,"Mã hàng hoặc lượng không hợp lệ.");Need(T(l,"unit")==T(item!,"unit"),"Sai đơn vị gốc của "+T(l,"itemId")+". Không tự quy đổi khi import.");}
         var imported=T(p,"importKey");if(imported!=""){s["importKeys"] ??= new JsonObject();Need(s["importKeys"]![imported] is null,"File/nội dung này đã được nhập; không tạo lại.");}
-        if(type=="purchaseBatch"){
+        if(type=="purchaseUpdate"){
+            Permission("purchase.create");
+            var original=Rows(s,"orders").FirstOrDefault(o=>T(o,"id")==T(p,"id"));Need(original is not null,"Không tìm thấy phiếu mua.");
+            var batch=T(original!,"batchId");var group=Rows(s,"orders").Where(o=>batch!=""?T(o,"batchId")==batch:T(o,"id")==T(original!,"id")).ToArray();
+            foreach(var o in group)Scope(s,user,T(o,"warehouseId"));
+            Need(!group.All(o=>N(o,"received")>=N(o,"quantity")),"Phiếu đã nhận đủ; dùng chứng từ điều chỉnh, không sửa phiếu gốc.");
+            var wh=T(p,"warehouseId");Scope(s,user,wh);Need(Physical(wh)&&DateOnly.TryParseExact(T(p,"dueDate"),"yyyy-MM-dd",out _),"Kho/ngày không hợp lệ.");
+            Need(T(p,"supplier").Trim().Length is >0 and <=250&&T(p,"editReason").Trim().Length is >0 and <=500,"Nhập nhà cung cấp và lý do sửa (tối đa 500 ký tự).");
+            var hasReceived=group.Any(o=>N(o,"received")>0);Need(!hasReceived||group.All(o=>T(o,"warehouseId")==wh),"Đã nhận hàng; không đổi kho nhận.");
+            Need(lines.Where(l=>T(l,"id")!="").Select(l=>T(l,"id")).Distinct().Count()==lines.Count(l=>T(l,"id")!=""),"Trùng dòng nguồn.");
+            foreach(var l in lines)Need(T(l,"id")==""||group.Any(o=>T(o,"id")==T(l,"id")),"Dòng hàng không thuộc phiếu.");
+            foreach(var o in group.Where(o=>N(o,"received")>0)){
+                var l=lines.FirstOrDefault(l=>T(l,"id")==T(o,"id"));Need(l is not null&&T(l,"itemId")==T(o,"itemId")&&N(l,"quantity")>=N(o,"received"),"Không xóa/đổi hàng đã nhận hoặc giảm dưới lượng thực nhận.");
+            }
+            var before=new JsonArray(group.Select(o=>o.DeepClone()).ToArray());
+            foreach(var o in group)s["orders"]!.AsArray().Remove(o);
+            foreach(var l in lines){
+                var old=group.FirstOrDefault(o=>T(o,"id")==T(l,"id"));var o=old?.DeepClone().AsObject()??original!.DeepClone().AsObject();
+                o["batchId"]=batch!=""?batch:T(original!,"id");o["id"]=old is null?Guid.NewGuid().ToString():T(old,"id");o["received"]=old is null?0:N(old,"received");o["warehouseId"]=wh;o["itemId"]=T(l,"itemId");o["quantity"]=N(l,"quantity");o["dueDate"]=T(p,"dueDate");o["supplier"]=T(p,"supplier").Trim();o.Remove("packs");o.Remove("packName");
+                o["history"] ??= new JsonArray();o["history"]!.AsArray().Add(new JsonObject{["label"]="Sửa phiếu: "+T(p,"editReason"),["actor"]=user.Username,["at"]=now});s["orders"]!.AsArray().Add(o);
+            }
+            s["purchaseEdits"] ??= new JsonArray();s["purchaseEdits"]!.AsArray().Add(new JsonObject{["number"]=T(original!,"number"),["before"]=before,["after"]=new JsonArray(Rows(s,"orders").Where(o=>batch!=""?T(o,"batchId")==batch:T(o,"id")==T(original!,"id")).Select(o=>o.DeepClone()).ToArray()),["reason"]=T(p,"editReason"),["actor"]=user.Username,["at"]=now});
+        }else if(type=="purchaseBatch"){
+
             Permission("purchase.create");var wh=T(p,"warehouseId");Scope(s,user,wh);Need(Physical(wh)&&DateOnly.TryParseExact(T(p,"dueDate"),"yyyy-MM-dd",out _),"Kho/ngày nhận không hợp lệ.");Need(T(p,"supplier").Length is >0 and <=250,"Nhập nhà cung cấp.");
             var batch=Guid.NewGuid().ToString();var number="DM-"+(Rows(s,"orders").Count+1).ToString("D5");
             foreach(var l in lines)s["orders"]!.AsArray().Add(new JsonObject{["id"]=Guid.NewGuid().ToString(),["number"]=number,["batchId"]=batch,["warehouseId"]=wh,["itemId"]=T(l,"itemId"),["quantity"]=N(l,"quantity"),["received"]=0,["dueDate"]=T(p,"dueDate"),["supplier"]=T(p,"supplier"),["reference"]=T(p,"reference"),["createdBy"]=user.Username,["createdAt"]=now,["sourceKind"]="MANUAL"});
