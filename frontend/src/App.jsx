@@ -6,109 +6,107 @@ import { Recipes } from "./features/recipes.jsx";
 import { Items } from "./features/items.jsx";
 import { Needs } from "./features/purchase.jsx";
 import { Dashboard } from "./features/dashboard.jsx";
-import { Administration, Audit } from "./features/administration.jsx";
+import { Administration } from "./features/administration.jsx";
 import { load, save, download, apiEnabled, loadServer } from "./data.js";
 import { days } from "./services/format.js";
 import { request, previewSession, roleNames } from "./services/access.js";
 const pages = [
   {
-    group: "ĐIỀU HÀNH",
     id: "dashboard",
     title: "Tổng quan",
     icon: "grid",
     permission: "dashboard.view",
   },
   {
-    group: "",
     id: "calendar",
-    title: "Thực đơn",
+    title: "Thực đơn & kế hoạch",
     icon: "calendar",
     permission: "operations.view",
   },
   {
-    group: "",
     id: "schedule",
     title: "Kế hoạch nguyên liệu",
     icon: "clock",
     permission: "operations.view",
   },
   {
-    group: "KHO & MUA HÀNG",
-    id: "transfers",
-    title: "Tồn kho & điều chuyển",
+    id: "stock",
+    title: "Kho & mua hàng",
     icon: "box",
     permission: "operations.view",
   },
   {
-    group: "",
     id: "purchase",
-    title: "Mua & nhận hàng",
+    title: "Mua & nhận",
     icon: "cart",
     permission: "operations.view",
   },
   {
-    group: "",
+    id: "transfers",
+    title: "Điều chuyển",
+    icon: "refresh",
+    permission: "operations.view",
+  },
+  {
+    id: "issues",
+    title: "Xuất bếp",
+    icon: "upload",
+    permission: "operations.view",
+  },
+  {
     id: "ledger",
     title: "Sổ kho",
     icon: "book",
     permission: "operations.view",
   },
   {
-    group: "DANH MỤC",
     id: "recipes",
-    title: "Món & định lượng",
+    title: "Danh mục",
     icon: "book",
     permission: "recipes.view",
   },
+  { id: "items", title: "Nguyên liệu", icon: "box", permission: "items.view" },
   {
-    group: "",
-    id: "items",
-    title: "Nguyên liệu",
-    icon: "box",
-    permission: "items.view",
-  },
-  {
-    group: "CHỨNG TỪ",
     id: "documents",
-    title: "Đã phát hành",
+    title: "Chứng từ",
     icon: "book",
     permission: "documents.view",
   },
   {
-    group: "",
     id: "templates",
     title: "Mẫu chứng từ",
     icon: "edit",
     permission: "documents.view",
   },
   {
-    group: "QUẢN TRỊ",
     id: "users",
-    title: "Người dùng",
+    title: "Quản trị",
     icon: "people",
     permission: "users.manage",
   },
   {
-    group: "",
     id: "roles",
-    title: "Vai trò & phân quyền",
+    title: "Vai trò & quyền",
     icon: "shield",
     permission: "roles.manage",
   },
   {
-    group: "",
     id: "settings",
     title: "Thiết lập chung",
     icon: "shield",
     permission: "templates.edit",
   },
+];
+const navGroups = [
+  { id: "dashboard", members: ["dashboard"] },
+  { id: "calendar", members: ["calendar", "schedule"] },
   {
-    group: "",
-    id: "audit",
-    title: "Nhật ký hoạt động",
-    icon: "clock",
-    permission: "audit.view",
+    id: "stock",
+    members: ["stock", "purchase", "transfers", "issues", "ledger"],
   },
+  { id: "recipes", members: ["recipes", "items"] },
+  { id: "documents", members: ["documents", "templates"] },
+  { id: "users", members: ["users", "roles", "settings"] },
 ];
 export default function App() {
   const [session, setSession] = useState(null),
@@ -272,33 +270,37 @@ export default function App() {
         <aside className={"sidebar " + (sideOpen ? "open" : "")}>
           <div className="sidebar-brand">
             LONA<span>.</span>
-            <small>HỆ THỐNG QUẢN TRỊ BẾP</small>
+            <small>QUẢN LÝ BẾP & KHO</small>
           </div>
           <div className="workspace">
             <span className="workspace-icon">
               <Icon name="box" />
             </span>
             <div>
-              <b>Bếp Cần Giờ</b>
-              <small>Không gian làm việc</small>
+              <b>LONA</b>
+              <small>Quản lý bếp & kho</small>
             </div>
           </div>
           <nav aria-label="Điều hướng quản trị">
-            {pages
-              .filter((p) => can(p.permission))
-              .map((p) => (
-                <React.Fragment key={p.id}>
-                  {p.group && <div className="nav-group">{p.group}</div>}
-                  <button
-                    className={page === p.id ? "active" : ""}
-                    onClick={() => navigate(p.id)}
-                  >
-                    <Icon name={p.icon} />
-                    <span>{p.title}</span>
-                    {page === p.id && <i />}
-                  </button>
-                </React.Fragment>
-              ))}
+            {navGroups.map((group) => {
+              const available = group.members
+                .map((id) => pages.find((p) => p.id === id))
+                .filter((p) => can(p.permission));
+              if (!available.length) return null;
+              const first = available[0],
+                main = pages.find((p) => p.id === group.id);
+              return (
+                <button
+                  key={group.id}
+                  className={group.members.includes(page) ? "active" : ""}
+                  onClick={() => navigate(first.id)}
+                >
+                  <Icon name={main.icon} />
+                  <span>{main.title}</span>
+                  {group.members.includes(page) && <i />}
+                </button>
+              );
+            })}
           </nav>
           <div className="sidebar-bottom">
             <span className="avatar">{session.user.name.slice(0, 1)}</span>
@@ -346,6 +348,8 @@ export default function App() {
               className="content-meta"
               hidden={[
                 "dashboard",
+                "stock",
+                "issues",
                 "purchase",
                 "ledger",
                 "calendar",
@@ -377,6 +381,36 @@ export default function App() {
                 khi chạy cùng máy chủ .NET.
               </div>
             )}
+            {navGroups
+              .filter(
+                (g) =>
+                  g.members.includes(page) &&
+                  !["stock", "dashboard"].includes(g.id),
+              )
+              .map((g) => (
+                <div className="section-tabs" key={g.id}>
+                  {g.members
+                    .map((id) => pages.find((p) => p.id === id))
+                    .filter((p) => can(p.permission))
+                    .map((p) => (
+                      <button
+                        className={p.id === page ? "active" : ""}
+                        key={p.id}
+                        onClick={() => navigate(p.id)}
+                      >
+                        {p.id === "calendar"
+                          ? "Thực đơn"
+                          : p.id === "recipes"
+                            ? "Món & định lượng"
+                            : p.id === "documents"
+                              ? "Đã phát hành"
+                              : p.id === "users"
+                                ? "Người dùng"
+                                : p.title}
+                      </button>
+                    ))}
+                </div>
+              ))}
             <div className="page-enter" key={page}>
               {!permitted ? (
                 <section className="no-access card">
@@ -397,6 +431,8 @@ export default function App() {
               ) : page === "dashboard" ? (
                 <Operations {...ctx} page="overview" />
               ) : [
+                  "stock",
+                  "issues",
                   "purchase",
                   "ledger",
                   "calendar",
@@ -418,14 +454,14 @@ export default function App() {
               ) : page === "users" || page === "roles" ? (
                 <Administration {...ctx} page={page} />
               ) : (
-                <Audit {...ctx} />
+                <section className="card smallcard">
+                  Chọn chức năng trong menu.
+                </section>
               )}
             </div>
             <footer className="admin-footer">
               <span>LONA · Quản trị vận hành bếp</span>
-              <span>
-                {apiEnabled ? "Dữ liệu máy chủ" : "Dữ liệu mẫu 1 tuần"}
-              </span>
+              <span>{apiEnabled ? "Dữ liệu máy chủ" : "Dữ liệu minh họa"}</span>
             </footer>
           </main>
         </div>
@@ -528,7 +564,7 @@ function Login({ onLogin, busy, failure }) {
             </span>
           </div>
         </div>
-        <small>Dữ liệu minh họa cho một tuần vận hành</small>
+        <small>Dữ liệu minh họa cho luồng thực đơn và kho</small>
       </section>
       <section className="login-form">
         <form onSubmit={submit}>

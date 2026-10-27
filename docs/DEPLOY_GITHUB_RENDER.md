@@ -1,10 +1,10 @@
-# Đưa LONA V6.2 lên GitHub và Render
+# Đưa LONA V7 lên GitHub và Render
 
 Bộ này đã có Dockerfile, render.yaml, cổng PORT, health check, dữ liệu JSON ở /var/data, cookie HTTPS và public origin để POST đăng nhập hoạt động khi Render kết thúc TLS. Một dịch vụ Docker phục vụ cả React và .NET, không cần host frontend riêng.
 
 ## 1. GitHub
 
-Tạo repository Private tên lona-kitchen-demo trong GitHub. Không chọn tạo README ban đầu nếu dùng các lệnh bên dưới. Giải nén bộ triển khai, mở Terminal trong LONA_V6_2_Render:
+Tạo repository Private tên lona-kitchen-demo trong GitHub. Không chọn tạo README ban đầu nếu dùng các lệnh bên dưới. Giải nén bộ triển khai, mở Terminal trong lona-kitchen-management:
 
 ```bash
 git init
@@ -83,4 +83,4 @@ https://render.com/docs/disks
 https://render.com/docs/environment-variables
 https://render.com/docs/free
 
-Chưa triển khai lên tài khoản Render ở thời điểm đóng gói. Cần kết nối/đăng nhập GitHub và Render để tạo tài nguyên và lấy URL thật. Container build chưa được chạy tại môi trường đóng gói do không có Docker/.NET SDK. Frontend và kiểm tra Node được kiểm chứng riêng; cần xác nhận log build trên Render.
+Bản V7 đã build/publish .NET và kiểm tra HTTP, public origin, cookie Secure, lưu tài khoản qua restart trong môi trường kiểm thử. Chưa build Docker image tại đây và chưa cập nhật service Render hiện hữu. Xem HUONG_DAN_V7.md, mục nâng cấp để giữ dữ liệu.

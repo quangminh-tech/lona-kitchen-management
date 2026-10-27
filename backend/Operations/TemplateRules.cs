@@ -32,7 +32,7 @@ public static class TemplateRules {
     public static JsonObject Context(JsonObject s,JsonObject document,JsonObject template){
         string T(JsonObject x,string k)=>WeekEngine.T(x,k);
         decimal N(JsonObject x,string k)=>WeekEngine.N(x,k);
-        string Wh(string id)=>WeekEngine.Rows(s,"warehouses").FirstOrDefault(w=>T(w,"id")==id)?["name"]?.GetValue<string>()??id;
+        string Wh(string id)=>id=="SUPPLIER"?"Nhà cung cấp":WeekEngine.Rows(s,"warehouses").FirstOrDefault(w=>T(w,"id")==id)?["name"]?.GetValue<string>()??id;
         var lines=new JsonArray();
         var inputs=document["lines"]?.AsArray()??new JsonArray(new JsonObject{
             ["item"]=T(document,"item"),["qty"]=N(document,"qty"),["received"]=N(document,"received")
@@ -44,13 +44,13 @@ public static class TemplateRules {
             var item=WeekEngine.Rows(s,"items").Single(i=>T(i,"id")==T(l,"item"));
             var dispatched=T(document,"status") is "IN_TRANSIT" or "PARTIAL" or "RECEIVED" or "POSTED"?N(l,"qty"):0;
             lines.Add(new JsonObject{
-                ["index"]=++index,["code"]=T(item,"id"),["name"]=T(document,"itemNameSnapshot")==""?T(item,"name"):T(document,"itemNameSnapshot"),["unit"]=T(document,"unitSnapshot")==""?T(item,"unit"):T(document,"unitSnapshot"),["stock"]=document["stockSnapshot"]?.DeepClone()??JsonValue.Create(0),["requested"]=N(l,"qty"),["approved"]=T(document,"status") is "DRAFT" or "CANCELLED"?0:N(l,"qty"),["dispatched"]=dispatched,["received"]=N(l,"received"),["inTransit"]=T(document,"sourceKind")=="ISSUE"?0:dispatched-N(l,"received"),["note"]=""
+                ["index"]=++index,["code"]=T(item,"id"),["name"]=T(document,"itemNameSnapshot")==""?T(item,"name"):T(document,"itemNameSnapshot"),["unit"]=T(document,"unitSnapshot")==""?T(item,"unit"):T(document,"unitSnapshot"),["stock"]=document["stockSnapshot"]?.DeepClone()??JsonValue.Create(0),["requested"]=N(l,"qty"),["approved"]=T(document,"status") is "DRAFT" or "CANCELLED"?0:N(l,"qty"),["dispatched"]=dispatched,["received"]=N(l,"received"),["inTransit"]=T(document,"sourceKind") is "ISSUE" or "RECEIVE"?0:dispatched-N(l,"received"),["note"]=""
             }
             );
         }
         return new JsonObject{
             ["company"]=s["company"]!.DeepClone(),["document"]=new JsonObject{
-                ["number"]=T(document,"number"),["date"]=T(document,"due"),["status"]=T(document,"status")=="POSTED"?"ĐÃ GHI NHẬN XUẤT SẢN XUẤT":T(document,"status"),["reason"]=T(document,"reason")==""?"Cấp nguyên liệu theo kế hoạch":T(document,"reason"),["reference"]=T(document,"reference")
+                ["number"]=T(document,"number"),["date"]=T(document,"due"),["status"]=T(document,"status")=="POSTED"?(T(document,"sourceKind")=="RECEIVE"?"ĐÃ NHẬN HÀNG":"ĐÃ GHI NHẬN XUẤT SẢN XUẤT"):T(document,"status"),["reason"]=T(document,"reason")==""?"Cấp nguyên liệu theo kế hoạch":T(document,"reason"),["reference"]=T(document,"reference")
             }
             ,["warehouse"]=new JsonObject{
                 ["from"]=Wh(T(document,"from")),["to"]=Wh(T(document,"to"))

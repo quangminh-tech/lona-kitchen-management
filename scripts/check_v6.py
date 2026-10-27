@@ -16,7 +16,7 @@ with tempfile.TemporaryDirectory() as td:
   for _ in range(150):
    try:call(a,'/api/operations',expect=401);break
    except (OSError,urllib.error.URLError):time.sleep(.1)
-  call(a,'/api/auth/login',{'username':'admin','password':env['LONA_ADMIN_PASSWORD']});s=call(a,'/api/operations');assert len(s['items'])==20 and len(s['templates'])==3
+  call(a,'/api/auth/login',{'username':'admin','password':env['LONA_ADMIN_PASSWORD']});s=call(a,'/api/operations');assert len(s['items'])==20 and len(s['templates'])==4
   def op(t,p,expect=200,client=None):
    global s
    c=client or a;current=call(c,'/api/operations');cmd={'type':t,'payload':p,'requestId':str(uuid.uuid4()),'expectedRevision':current['revision']};result=call(c,'/api/operations',cmd,expect)

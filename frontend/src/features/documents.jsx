@@ -582,7 +582,17 @@ export function DocumentArchive({ data, send, can, notify }) {
   const [source, setSource] = useState(""),
     [template, setTemplate] = useState("TRANSFER"),
     [working, setWorking] = useState(false);
-  const sources = [...data.transfers, ...data.issues];
+  const sources = [
+    ...data.transfers,
+    ...data.issues,
+    ...(data.stockReceipts || []),
+  ];
+  const sourceType = (id) =>
+    data.issues.some((d) => d.id === id)
+      ? "ISSUE"
+      : (data.stockReceipts || []).some((d) => d.id === id)
+        ? "RECEIVE"
+        : "TRANSFER";
   async function publish() {
     setWorking(true);
     try {
@@ -616,11 +626,7 @@ export function DocumentArchive({ data, send, can, notify }) {
             value={source}
             onChange={(e) => {
               setSource(e.target.value);
-              setTemplate(
-                data.issues.some((d) => d.id === e.target.value)
-                  ? "ISSUE"
-                  : "TRANSFER",
-              );
+              setTemplate(sourceType(e.target.value));
             }}
           >
             <option value="">Chọn phiếu</option>
@@ -640,12 +646,8 @@ export function DocumentArchive({ data, send, can, notify }) {
             {data.templates
               .filter(
                 (t) =>
-                  t.id ===
-                    (data.issues.some((d) => d.id === source)
-                      ? "ISSUE"
-                      : "TRANSFER") ||
-                  (t.id === "REQUEST" &&
-                    !data.issues.some((d) => d.id === source)),
+                  t.id === sourceType(source) ||
+                  (t.id === "REQUEST" && sourceType(source) === "TRANSFER"),
               )
               .map((t) => (
                 <option key={t.id} value={t.id}>

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: lona-kitchen-demo
+    name: lona-kitchen-management
     runtime: docker
     plan: starter
     region: singapore

@@ -1,7 +1,7 @@
 {
-  "name": "lona-v6-admin",
+  "name": "lona-kitchen-management",
   "private": true,
-  "version": "6.0.0",
+  "version": "7.0.0",
   "type": "module",
   "scripts": {
     "build": "vite build",

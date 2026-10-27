@@ -6,7 +6,7 @@ using Lona.Week;
 using Lona.Admin.Storage;
 using Lona.Admin.Auth;
 namespace Lona.Admin.Operations;
-public sealed class OperationsStore {
+public sealed partial class OperationsStore {
     readonly string path;
     public SemaphoreSlim Gate{
         get;
@@ -20,7 +20,17 @@ public sealed class OperationsStore {
             JsonFile.Write(path,JsonNode.Parse(File.ReadAllText(seed))!);
         }
     }
-    public JsonObject Read()=>JsonFile.Read<JsonObject>(path);
+    public JsonObject Read(){
+        var s=JsonFile.Read<JsonObject>(path);
+        s["stockReceipts"] ??= new JsonArray();s["importKeys"] ??= new JsonObject();
+        if(!Rows(s,"templates").Any(t=>T(t,"id")=="RECEIVE")){
+            var template=Rows(s,"templates").First().DeepClone().AsObject();template["id"]="RECEIVE";template["name"]="Phiếu nhập kho";template["title"]="PHIẾU NHẬP KHO";template["version"]=1;
+            template["info"]="Nguồn: {{warehouse.from}}\nKho nhận: {{warehouse.to}}\nTheo đề nghị: {{document.reference}}";
+            template["columns"]=new JsonArray(new JsonObject{["key"]="index",["label"]="STT",["width"]=6},new JsonObject{["key"]="code",["label"]="Mã",["width"]=14},new JsonObject{["key"]="name",["label"]="Tên hàng",["width"]=38},new JsonObject{["key"]="unit",["label"]="ĐVT",["width"]=10},new JsonObject{["key"]="received",["label"]="Thực nhận",["width"]=20});
+            s["templates"]!.AsArray().Add(template);
+        }
+        return s;
+    }
     public void Write(JsonObject s)=>JsonFile.Write(path,s);
     static string T(JsonObject n,string k)=>WeekEngine.T(n,k);
     static decimal N(JsonObject n,string k)=>WeekEngine.N(n,k);
@@ -35,6 +45,8 @@ public sealed class OperationsStore {
     public static JsonObject Public(JsonObject state,UserRecord user,HashSet<string> permissions){
         var s=state.DeepClone().AsObject();
         var scopes=Scopes(s,user);
+        var currentHash=Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(s["base"]!.ToJsonString()+s["menus"]!.ToJsonString()+s["balances"]!.ToJsonString()+s["orders"]!.ToJsonString()+s["transfers"]!.ToJsonString())));
+        foreach(var job in Rows(s,"jobs"))job["isCurrent"]=T(job,"fingerprint")==currentHash;
         s["allowedWarehouses"]=new JsonArray(scopes.Select(x=>JsonValue.Create(x)).ToArray());
         s.Remove("base");
         s.Remove("requests");
@@ -51,12 +63,13 @@ public sealed class OperationsStore {
             foreach(var total in snap["totals"]?.AsArray().OfType<JsonObject>()??[])total["estimatedCost"]=0;
         }
         s["orders"]=new JsonArray(Rows(s,"orders").Where(o=>scopes.Contains(T(o,"warehouseId"))).Select(o=>o.DeepClone()).ToArray());
+        s["stockReceipts"]=new JsonArray(Rows(s,"stockReceipts").Where(d=>scopes.Contains(T(d,"to"))).Select(d=>d.DeepClone()).ToArray());
         s["issues"]=new JsonArray(Rows(s,"issues").Where(d=>scopes.Contains(T(d,"from"))).Select(d=>d.DeepClone()).ToArray());
         s["documents"]=new JsonArray(Rows(s,"documents").Where(d=>scopes.Contains(T(d,"warehouseFrom"))||scopes.Contains(T(d,"warehouseTo"))).Select(d=>d.DeepClone()).ToArray());
         if(!permissions.Contains("audit.view"))s["audit"]=new JsonArray();
         return s;
     }
-    public JsonObject Apply(JsonObject s,JsonObject cmd,UserRecord user,HashSet<string> permissions){
+    public JsonObject Apply(JsonObject s,JsonObject cmd,UserRecord user,HashSet<string> permissions,bool persist=true){
         var type=T(cmd,"type");
         var p=cmd["payload"]!.AsObject();
         var request=T(cmd,"requestId");
@@ -84,10 +97,11 @@ public sealed class OperationsStore {
             }
             );
         }
-        if(type=="create"){
+        if(WorkflowCommands.Contains(type)) Workflow(s,type,p,user,permissions);
+        else if(type=="create"){
             Permission("transfer.request");
             Scope(s,user,T(p,"to"));
-            Need(Rows(s,"warehouses").Any(w=>T(w,"id")==T(p,"from"))&&Rows(s,"warehouses").Any(w=>T(w,"id")==T(p,"to"))&&T(p,"from")!=T(p,"to")&&T(p,"from")!="TRANSIT"&&T(p,"to")!="TRANSIT"&&Rows(s,"items").Any(i=>T(i,"id")==T(p,"item"))&&N(p,"qty")>0&&DateOnly.TryParseExact(T(p,"due"),"yyyy-MM-dd",out _),"Kho, hàng, ngày hoặc lượng không hợp lệ.");
+            Need(Rows(s,"warehouses").Any(w=>T(w,"id")==T(p,"from"))&&Rows(s,"warehouses").Any(w=>T(w,"id")==T(p,"to"))&&T(p,"from")!=T(p,"to")&&T(p,"from")!="TRANSIT"&&T(p,"to")!="TRANSIT"&&T(p,"from")!="PRODUCTION"&&T(p,"to")!="PRODUCTION"&&Rows(s,"items").Any(i=>T(i,"id")==T(p,"item"))&&N(p,"qty")>0&&DateOnly.TryParseExact(T(p,"due"),"yyyy-MM-dd",out _),"Kho, hàng, ngày hoặc lượng không hợp lệ.");
             var t=new JsonObject{
                 ["from"]=T(p,"from"),["to"]=T(p,"to"),["item"]=T(p,"item"),["qty"]=N(p,"qty"),["due"]=T(p,"due"),["reason"]=T(p,"reason"),["reference"]=T(p,"reference")
             }
@@ -97,6 +111,8 @@ public sealed class OperationsStore {
             t["status"]="DRAFT";
             t["received"]=0;
             t["createdBy"]=user.Username;
+            t["createdAt"]=DateTimeOffset.UtcNow.ToString("O");
+            t["history"]=new JsonArray(new JsonObject{["label"]="Lập yêu cầu",["at"]=DateTimeOffset.UtcNow.ToString("O"),["actor"]=user.Username});
             var sourceItem=Rows(s,"items").Single(i=>T(i,"id")==T(t,"item"));
             t["itemNameSnapshot"]=T(sourceItem,"name");
             t["unitSnapshot"]=T(sourceItem,"unit");
@@ -187,7 +203,7 @@ public sealed class OperationsStore {
             Scope(s,user,kitchen);
             var job=Rows(s,"jobs").FirstOrDefault(j=>T(j,"id")==T(p,"jobId")&&T(j,"kitchen")==kitchen);
             Need(job is not null,"Không tìm thấy kế hoạch.");
-            var currentHash=Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(s["base"]!.ToJsonString()+s["menus"]!.ToJsonString()+s["balances"]!.ToJsonString()+s["orders"]!.ToJsonString())));
+            var currentHash=Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(s["base"]!.ToJsonString()+s["menus"]!.ToJsonString()+s["balances"]!.ToJsonString()+s["orders"]!.ToJsonString()+s["transfers"]!.ToJsonString())));
             Need(T(job!,"fingerprint")==currentHash,"Đầu vào đã đổi. Tính lại trước khi lập mua.");
             var snap=Rows(job!,"snapshots").Single(r=>T(r,"key")=="D+1");
             Need(T(snap,"status")=="READY","Kế hoạch chưa đủ dữ liệu.");
@@ -199,6 +215,7 @@ public sealed class OperationsStore {
             );
         }
         else if(type=="purchaseReceive"){
+            s["stockReceipts"] ??= new JsonArray();
             Permission("stock.receive");
             var o=Rows(s,"orders").FirstOrDefault(o=>T(o,"id")==T(p,"id"));
             Need(o is not null,"Không tìm thấy đơn.");
@@ -208,8 +225,11 @@ public sealed class OperationsStore {
             var key=T(o!,"warehouseId")+"|"+T(o!,"itemId");
             balances[key]=(balances[key]?.GetValue<decimal>()??0)+qty;
             o!["received"]=N(o,"received")+qty;
+            var receipt=new JsonObject{["id"]=Guid.NewGuid().ToString(),["number"]="PNK-"+(Rows(s,"stockReceipts").Count+1).ToString("D5"),["sourceKind"]="RECEIVE",["from"]="SUPPLIER",["to"]=T(o,"warehouseId"),["due"]=DateTimeOffset.UtcNow.ToOffset(TimeSpan.FromHours(7)).ToString("yyyy-MM-dd"),["status"]="POSTED",["reason"]="Nhận hàng theo đề nghị "+T(o,"number"),["reference"]=T(o,"id"),["createdBy"]=user.Username,["createdAt"]=DateTimeOffset.UtcNow.ToString("O"),["lines"]=new JsonArray(new JsonObject{["item"]=T(o,"itemId"),["qty"]=qty,["received"]=qty})};
+            s["stockReceipts"]!.AsArray().Add(receipt);
+
             s["ledger"]!.AsArray().Add(new JsonObject{
-                ["id"]=Guid.NewGuid().ToString(),["doc"]=T(o,"id"),["from"]="SUPPLIER",["to"]=T(o,"warehouseId"),["item"]=T(o,"itemId"),["qty"]=qty,["actor"]=user.Username,["at"]=DateTimeOffset.UtcNow.ToString("O")
+                ["id"]=Guid.NewGuid().ToString(),["doc"]=T(receipt,"id"),["source"]=T(o,"id"),["from"]="SUPPLIER",["to"]=T(o,"warehouseId"),["item"]=T(o,"itemId"),["qty"]=qty,["actor"]=user.Username,["at"]=DateTimeOffset.UtcNow.ToString("O")
             }
             );
         }
@@ -219,7 +239,7 @@ public sealed class OperationsStore {
             Scope(s,user,kitchen);
             var job=Rows(s,"jobs").FirstOrDefault(j=>T(j,"id")==T(p,"jobId")&&T(j,"kitchen")==kitchen);
             Need(job is not null,"Không tìm thấy kế hoạch.");
-            var currentHash=Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(s["base"]!.ToJsonString()+s["menus"]!.ToJsonString()+s["balances"]!.ToJsonString()+s["orders"]!.ToJsonString())));
+            var currentHash=Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(s["base"]!.ToJsonString()+s["menus"]!.ToJsonString()+s["balances"]!.ToJsonString()+s["orders"]!.ToJsonString()+s["transfers"]!.ToJsonString())));
             Need(T(job!,"fingerprint")==currentHash,"Kế hoạch đã cũ. Chạy tính lại trước khi xuất.");
             var snapshot=Rows(job!,"snapshots").Single(r=>T(r,"key")=="D+1");
             Need(T(snapshot,"status")=="READY","Kế hoạch nấu chưa đủ dữ liệu.");
@@ -267,12 +287,13 @@ public sealed class OperationsStore {
         }
         else if(type=="publish"){
             Permission("documents.publish");
-            var t=Rows(s,"transfers").Concat(Rows(s,"issues")).FirstOrDefault(t=>T(t,"id")==T(p,"transferId"));
+            var t=Rows(s,"transfers").Concat(Rows(s,"issues")).Concat(Rows(s,"stockReceipts")).FirstOrDefault(t=>T(t,"id")==T(p,"transferId"));
             Need(t is not null,"Không tìm thấy phiếu nguồn.");
             Scope(s,user,T(t!,"to")=="PRODUCTION"?T(t!,"from"):T(t!,"to"));
             var template=Rows(s,"templates").FirstOrDefault(t=>T(t,"id")==T(p,"templateId"));
             Need(template is not null,"Không tìm thấy mẫu.");
-            Need((T(template!,"id")=="ISSUE")== (T(t!,"sourceKind")=="ISSUE"),"Loại mẫu không khớp nguồn chứng từ.");
+            var required=T(t!,"sourceKind");
+            Need(required=="RECEIVE"?T(template!,"id")=="RECEIVE":required=="ISSUE"?T(template!,"id")=="ISSUE":T(template!,"id") is "TRANSFER" or "REQUEST","Loại mẫu không khớp nguồn chứng từ.");
             var context=TemplateRules.Context(s,t!,template!);
             var key=T(t!,"id")+"|"+T(p,"templateId")+"|"+N(template!,"version")+"|"+T(t!,"status")+"|"+N(t!,"received");
             if(!Rows(s,"documents").Any(d=>T(d,"key")==key))s["documents"]!.AsArray().Add(new JsonObject{
@@ -287,7 +308,11 @@ public sealed class OperationsStore {
             ["actor"]=user.Username,["action"]=type,["at"]=DateTimeOffset.UtcNow.ToString("O")
         }
         );
-        Write(s);
+        if(type is "approve" or "dispatch" or "receive" or "cancel") {
+            transfer!["history"] ??= new JsonArray();
+            transfer["history"]!.AsArray().Add(new JsonObject{["label"]=type=="approve"?"Duyệt giữ hàng":type=="dispatch"?"Xuất chuyển":type=="receive"?"Nhận hàng":"Hủy phiếu",["at"]=DateTimeOffset.UtcNow.ToString("O"),["actor"]=user.Username,["qty"]=type=="receive"?N(p,"qty"):0});
+        }
+        if(persist)Write(s);
         return s;
     }
     static void Repeat(JsonObject s,JsonObject p){
@@ -324,7 +349,7 @@ public sealed class OperationsStore {
             ("D+1",date.AddDays(1),date.AddDays(1)),("D+2",date.AddDays(2),date.AddDays(2)),("D+3",date.AddDays(3),date.AddDays(3)),("7 ngày",date.AddDays(1),date.AddDays(7)),("Tháng sau",first,first.AddMonths(1).AddDays(-1))
         }
         ;
-        var input=s["base"]!.ToJsonString()+s["menus"]!.ToJsonString()+s["balances"]!.ToJsonString()+s["orders"]!.ToJsonString();
+        var input=s["base"]!.ToJsonString()+s["menus"]!.ToJsonString()+s["balances"]!.ToJsonString()+s["orders"]!.ToJsonString()+s["transfers"]!.ToJsonString();
         var fingerprint=Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(input)));
         var key=kitchen+"|"+date;
         var jobs=s["jobs"]!.AsArray();

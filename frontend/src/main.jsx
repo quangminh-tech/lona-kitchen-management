@@ -8,3 +8,5 @@ createRoot(document.getElementById("root")).render(<App />);
 import "./styles/workspace.css";
 
 import "./styles/weekly-menu.css";
+
+import "./styles/workflow.css";

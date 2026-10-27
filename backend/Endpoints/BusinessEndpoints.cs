@@ -37,9 +37,30 @@ var ops=app.Services.GetRequiredService<OperationsStore>();
         ).RequireAuthorization();
         app.MapPost("/api/change",async(HttpContext c,JsonObject cmd)=>{
             await gate.WaitAsync(); try{
-                var s=JsonFile.Read<JsonObject>(path);var kind=WeekEngine.T(cmd,"type");var payload=cmd["payload"]!.AsObject();if(kind is not ("recipe" or "replace" or "delete")||(kind=="replace"&&WeekEngine.T(payload,"collection")!="items"))throw new RuleError("Dùng nghiệp vụ kế hoạch và kho V6; endpoint cũ chỉ quản lý danh mục.");
-await ops.Gate.WaitAsync();try{var os=ops.Read();if(kind=="replace")foreach(var item in WeekEngine.Rows(payload,"rows")){var old=WeekEngine.Find(s,"items",WeekEngine.T(item,"id"));if(old is not null&&(WeekEngine.N(item,"stock")!=WeekEngine.N(old,"stock")||WeekEngine.T(item,"baseUnit")!=WeekEngine.T(old,"baseUnit")))throw new RuleError("Không sửa tồn hoặc đơn vị cơ sở trực tiếp; cần nghiệp vụ kho.");}if(kind=="delete"&&WeekEngine.T(payload,"collection")=="items"&&os["balances"]!.AsObject().Any(x=>x.Key.EndsWith("|"+WeekEngine.T(payload,"id"))&&(x.Value?.GetValue<decimal>()??0)!=0))throw new RuleError("Mặt hàng còn tồn trong hệ thống kho.");}finally{ops.Gate.Release();}
-CommandPolicy.Check(s,cmd,Permissions(c)); var next=WeekEngine.Change(s,cmd); if(WeekEngine.N(next,"revision")>WeekEngine.N(s,"revision"))next["audit"]!.AsArray()[0]!["actor"]=Current(c).Username; JsonFile.Write(path,next);await ops.Gate.WaitAsync();try{var os=ops.Read();os["base"]=next.DeepClone();os["items"]=new JsonArray(WeekEngine.Rows(next,"items").Select(i=>(JsonNode)new JsonObject{["id"]=WeekEngine.T(i,"id"),["name"]=WeekEngine.T(i,"name"),["unit"]=WeekEngine.T(i,"baseUnit"),["pack"]=WeekEngine.N(i,"packQuantity")}).ToArray());os["revision"]=WeekEngine.N(os,"revision")+1;ops.Write(os);}finally{ops.Gate.Release();} return Results.Json(CommandPolicy.Redact(next,Permissions(c)));
+                await ops.Gate.WaitAsync();
+                try {
+                    var s=JsonFile.Read<JsonObject>(path);var kind=WeekEngine.T(cmd,"type");var payload=cmd["payload"]!.AsObject();
+                    if(kind is not ("recipe" or "replace" or "delete")||(kind=="replace"&&WeekEngine.T(payload,"collection")!="items"))throw new RuleError("Dùng nghiệp vụ kế hoạch và kho; endpoint này chỉ quản lý danh mục.");
+                    var os=ops.Read();
+                    if(kind=="replace")foreach(var item in WeekEngine.Rows(payload,"rows")){
+                        var old=WeekEngine.Find(s,"items",WeekEngine.T(item,"id"));
+                        if(old is not null&&(WeekEngine.N(item,"stock")!=WeekEngine.N(old,"stock")||WeekEngine.T(item,"baseUnit")!=WeekEngine.T(old,"baseUnit")))throw new RuleError("Không sửa tồn hoặc đơn vị cơ sở trực tiếp; cần nghiệp vụ kho.");
+                    }
+                    if(kind=="delete"&&WeekEngine.T(payload,"collection")=="items"){
+                        var id=WeekEngine.T(payload,"id");
+                        var used=os["balances"]!.AsObject().Any(x=>x.Key.EndsWith("|"+id)&&(x.Value?.GetValue<decimal>()??0)!=0)
+                            ||WeekEngine.Rows(os,"ledger").Any(x=>WeekEngine.T(x,"item")==id)
+                            ||WeekEngine.Rows(os,"orders").Any(x=>WeekEngine.T(x,"itemId")==id)
+                            ||WeekEngine.Rows(os,"transfers").Any(x=>WeekEngine.T(x,"item")==id)
+                            ||WeekEngine.Rows(os,"issues").Any(x=>WeekEngine.Rows(x,"lines").Any(l=>WeekEngine.T(l,"item")==id));
+                        if(used)throw new RuleError("Nguyên liệu đã có tồn hoặc phát sinh phiếu; không xóa để giữ liên kết chứng từ.");
+                    }
+                    CommandPolicy.Check(s,cmd,Permissions(c));var next=WeekEngine.Change(s,cmd);
+                    if(WeekEngine.N(next,"revision")>WeekEngine.N(s,"revision"))next["audit"]!.AsArray()[0]!["actor"]=Current(c).Username;
+                    JsonFile.Write(path,next);os["base"]=next.DeepClone();
+                    os["items"]=new JsonArray(WeekEngine.Rows(next,"items").Select(i=>(JsonNode)new JsonObject{["id"]=WeekEngine.T(i,"id"),["name"]=WeekEngine.T(i,"name"),["unit"]=WeekEngine.T(i,"baseUnit"),["pack"]=WeekEngine.N(i,"packQuantity")}).ToArray());os["revision"]=WeekEngine.N(os,"revision")+1;ops.Write(os);
+                    return Results.Json(CommandPolicy.Redact(next,Permissions(c)));
+                } finally {ops.Gate.Release();}
             }
             finally{
                 gate.Release();

@@ -219,3 +219,19 @@ export function documentHTML(template, context) {
   const width = template.columns.reduce((a, c) => a + c.width, 0);
   return `<!doctype html><html lang="vi"><meta charset="utf-8"><title>${esc(context.document.number)}</title><style>@page{size:A4 ${template.orientation};margin:15mm}body{font:${template.fontSize}pt/1.6 Arial;color:#111;margin:25px}h1{text-align:center;font-size:18pt;margin:25px 0 4px}.subtitle{text-align:center;margin-bottom:22px}table{border-collapse:collapse;width:100%;margin:22px 0;table-layout:fixed}th,td{border:1px solid #888;padding:7px;overflow-wrap:anywhere;vertical-align:top}thead{display:table-header-group}tr{break-inside:avoid}th{background:#f2f3f2}.signatures{display:flex;gap:12px;margin:30px 0 65px;break-inside:avoid}.signatures div{flex:1;text-align:center}.signatures small{display:block}.footer{font-size:9pt;white-space:normal}button{padding:10px}@media print{button{display:none}body{margin:0}}</style><div>${text("header")}</div><h1>${text("title")}</h1><div class="subtitle">${text("subtitle")}</div><div>${text("info")}</div><table><thead><tr>${template.columns.map((c) => `<th style="width:${(100 * c.width) / width}%">${esc(c.label)}</th>`).join("")}</tr></thead><tbody>${context.lines.map((l) => `<tr>${template.columns.map((c) => `<td>${esc(l[c.key])}</td>`).join("")}</tr>`).join("")}</tbody></table><div class="signatures">${template.signatures.map((s) => `<div><b>${esc(s)}</b><small>(Ký, ghi rõ họ tên)</small></div>`).join("")}</div><div class="footer">${text("footer")}</div><p style="font-size:8pt">${esc(context.document.status)} · ${esc(context.document.number)}</p><button onclick="window.print()">In / Lưu thành PDF</button></html>`;
 }
+
+const receiptTemplate = structuredClone(defaultTemplates[0]);
+Object.assign(receiptTemplate, {
+  id: "RECEIVE",
+  name: "Phiếu nhập kho",
+  title: "PHIẾU NHẬP KHO",
+  info: "Nguồn: {{warehouse.from}}\nKho nhận: {{warehouse.to}}\nTheo đề nghị: {{document.reference}}",
+  columns: [
+    { key: "index", label: "STT", width: 6 },
+    { key: "code", label: "Mã", width: 14 },
+    { key: "name", label: "Tên hàng", width: 38 },
+    { key: "unit", label: "ĐVT", width: 10 },
+    { key: "received", label: "Thực nhận", width: 20 },
+  ],
+});
+defaultTemplates.push(receiptTemplate);
